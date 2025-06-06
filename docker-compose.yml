@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  viettel-idc-docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: viettel-idc-docs:latest
+    container_name: viettel-idc-docs-container
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    environment:
+      - NODE_ENV=production
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.viettel-docs.rule=Host(`docs.viettelidc.local`)"
+      - "traefik.http.routers.viettel-docs.entrypoints=web"
+      - "traefik.http.services.viettel-docs.loadbalancer.server.port=3001"
+    networks:
+      - docs-network
+
+networks:
+  docs-network:
+    driver: bridge
+    name: viettel-idc-docs-network
+
+volumes:
+  docs-data:
+    name: viettel-idc-docs-data
