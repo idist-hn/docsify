@@ -1,83 +1,138 @@
 <p align="center">
-  <a href="https://docsify.js.org">
-    <img alt="docsify" src="./docs/_media/icon.svg">
-  </a>
+  <img alt="Viettel IDC Cloud" src="./_media/icon.svg" width="120">
 </p>
 
 <p align="center">
-  A magical documentation site generator.
+  <strong>Tài liệu hướng dẫn sử dụng dịch vụ Cloud Viettel IDC</strong>
 </p>
 
 <p align="center">
-  <a href="#backers"><img alt="Backers on Open Collective" src="https://opencollective.com/docsify/backers/badge.svg?style=flat-square"></a>
-  <a href="#sponsors">
-    <img alt="Sponsors on Open Collective" src="https://opencollective.com/docsify/sponsors/badge.svg?style=flat-square"></a>
-  <a href="https://github.com/docsifyjs/docsify/actions/workflows/test.yml"><img src="https://github.com/docsifyjs/docsify/actions/workflows/test.yml/badge.svg" alt="Build & Test"></a>
-  <a href="https://www.npmjs.com/package/docsify"><img alt="npm" src="https://img.shields.io/npm/v/docsify.svg?style=flat-square"></a>
-  <a href="https://discord.gg/3NwKFyR"><img alt="Join Discord community and chat about Docsify" src="https://img.shields.io/discord/713647066802421792.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2&cacheSeconds=60"></a>
-  <a href="https://gitpod.io/#https://github.com/docsifyjs/docsify"><img src="https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod" alt="Gitpod Ready-to-Code"></a>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?style=flat-square">
+  <img alt="Status" src="https://img.shields.io/badge/status-active-green.svg?style=flat-square">
+  <img alt="Language" src="https://img.shields.io/badge/language-Vietnamese-red.svg?style=flat-square">
 </p>
 
-<p align="center">Gold Sponsor via <a href="https://opencollective.com/docsify">Open Collective</a></p>
+Chào mừng bạn đến với tài liệu hướng dẫn sử dụng các dịch vụ Cloud của **Viettel IDC**. Tài liệu này cung cấp thông tin chi tiết về cách sử dụng, cấu hình và quản lý các dịch vụ Cloud một cách hiệu quả.
 
-<p align="center">
-  <a href="https://opencollective.com/docsify/order/3254">
-    <img src="https://opencollective.com/docsify/tiers/gold-sponsor.svg?avatarHeight=48">
-  </a>
-</p>
+## Về Viettel IDC Cloud
 
-Docsify turns one or more Markdown files into a Website, with no build process required.
+**Viettel IDC** là đơn vị hàng đầu tại Việt Nam trong lĩnh vực cung cấp dịch vụ Trung tâm dữ liệu (Data Center) và Điện toán đám mây (Cloud Computing). Với hệ thống Data Center hiện đại đạt chuẩn Tier 3 quốc tế, chúng tôi cung cấp các dịch vụ hạ tầng CNTT chất lượng cao.
 
-## Features
+### Dịch vụ chính
 
-- No statically built html files
-- Simple and lightweight
-- Smart full-text search plugin
-- Multiple themes
-- Useful plugin API
-- Emoji support
+- **vServer**: Máy chủ ảo (VPS) linh hoạt và mạnh mẽ
+- **vStorage**: Lưu trữ đám mây an toàn, mở rộng không giới hạn
+- **vContainer**: Nền tảng container hóa hiện đại
+- **vDatabase**: Cơ sở dữ liệu đám mây được quản lý
+- **vMonitoring**: Giám sát hệ thống 24/7
+- **vSecurity**: Bảo mật toàn diện cho hạ tầng Cloud
 
-## Quick Start
+### Ưu điểm vượt trội
 
-Get going fast by using a static web server or GitHub Pages with this ready-to-use [Docsify Template](https://github.com/docsifyjs/docsify-template), review the [quick start tutorial](https://docsify.js.org/#/quickstart) or jump right into a CodeSandbox example site with the button below.
+- ✅ **SLA 99.99%** - Cam kết độ sẵn sàng cao
+- ✅ **Hỗ trợ 24/7** - Đội ngũ kỹ thuật chuyên nghiệp
+- ✅ **Bảo mật tối ưu** - Tuân thủ tiêu chuẩn quốc tế
+- ✅ **Dữ liệu tại Việt Nam** - Tuân thủ quy định pháp luật
+- ✅ **Hiệu năng cao** - Độ trễ thấp nhờ hạ tầng trong nước
+- ✅ **Chi phí tối ưu** - Chỉ trả tiền cho những gì sử dụng
 
-[![Edit 307qqv236](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/307qqv236)
+## Bắt đầu nhanh
 
-## Showcase
+Để bắt đầu sử dụng dịch vụ Cloud của Viettel IDC, bạn có thể làm theo các bước sau:
 
-A large collection of showcase projects are included in [awesome-docsify](https://github.com/docsifyjs/awesome-docsify#showcase).
+### 1. Đăng ký tài khoản
+- Truy cập [Portal Viettel IDC Cloud](https://portal.viettelidc.com.vn)
+- Đăng ký tài khoản mới hoặc đăng nhập
+- Xác thực thông tin và kích hoạt tài khoản
 
-## Links
+### 2. Khởi tạo dịch vụ đầu tiên
+- Chọn dịch vụ phù hợp với nhu cầu
+- Cấu hình thông số kỹ thuật
+- Thanh toán và triển khai
 
-- [Documentation](https://docsify.js.org)
-- [Docsify CLI (Command Line Interface)](https://github.com/docsifyjs/docsify-cli)
-- CDN: [UNPKG](https://unpkg.com/docsify/) | [jsDelivr](https://cdn.jsdelivr.net/npm/docsify/) | [cdnjs](https://cdnjs.com/libraries/docsify)
-- [`develop` branch preview](https://docsify-preview.vercel.app/)
-- [Awesome docsify](https://github.com/docsifyjs/awesome-docsify)
-- [Community chat](https://discord.gg/3NwKFyR)
+### 3. Quản lý và giám sát
+- Sử dụng Dashboard để quản lý tài nguyên
+- Thiết lập giám sát và cảnh báo
+- Tối ưu hóa hiệu năng và chi phí
 
-## Contributing
+📖 **Xem hướng dẫn chi tiết**: [Hướng dẫn đăng ký](guides/registration.md)
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+## Tài liệu hướng dẫn
 
-## Backers
+### 📚 Hướng dẫn cơ bản
+- [Giới thiệu về Viettel IDC Cloud](introduction.md)
+- [Đăng ký và kích hoạt tài khoản](guides/registration.md)
+- [Quản lý tài nguyên](guides/resource-management.md)
+- [Thanh toán và hóa đơn](guides/billing.md)
 
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/docsify/contribute)]
+### ☁️ Dịch vụ Cloud
+- [Tổng quan dịch vụ Cloud](cloud/overview.md)
+- [vServer - Máy chủ ảo](cloud/vserver.md)
+- [vStorage - Lưu trữ đám mây](cloud/vstorage.md)
+- [vContainer - Container hóa](cloud/vcontainer.md)
+- [vDatabase - Cơ sở dữ liệu](cloud/vdbs.md)
+- [vMonitoring - Giám sát](cloud/cloudwatch.md)
+- [vKubernetes - Orchestration](cloud/voks.md)
 
-<a href="https://opencollective.com/docsify#backers" target="_blank"><img src="https://opencollective.com/docsify/backers.svg?width=890"></a>
+### 🛠️ Hướng dẫn kỹ thuật
+- [API Documentation](guides/api.md)
+- [CLI Tools](guides/cli.md)
+- [SDK và Libraries](guides/sdk.md)
+- [Best Practices](guides/best-practices.md)
 
-## Sponsors
+### 🔧 Triển khai và vận hành
+- [Deployment Guide](guides/deployment.md)
+- [Monitoring và Logging](guides/monitoring.md)
+- [Backup và Recovery](guides/backup.md)
+- [Security Guidelines](guides/security.md)
 
-Thank you for supporting this project! ❤️ [[Become a sponsor](https://opencollective.com/docsify/contribute)]
+## Liên kết hữu ích
 
-<img src="https://opencollective.com/docsify/sponsors.svg?width=890" />
+- 🌐 [Portal Viettel IDC Cloud](https://portal.viettelidc.com.vn)
+- 📞 [Hỗ trợ khách hàng](support.md)
+- 📧 [Liên hệ](mailto:support@viettelidc.com.vn)
+- 💬 [Community Forum](https://forum.viettelidc.com.vn)
 
-## Contributors
+## Khách hàng tiêu biểu
 
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+Viettel IDC Cloud đã và đang phục vụ hàng nghìn khách hàng từ nhiều lĩnh vực:
 
-<a href="https://github.com/docsifyjs/docsify/graphs/contributors"><img src="https://opencollective.com/docsify/contributors.svg?width=890" /></a>
+- 🏛️ **Cơ quan nhà nước**: Bộ, ngành, UBND các tỉnh thành
+- 🏦 **Tài chính - Ngân hàng**: Các ngân hàng thương mại, công ty tài chính
+- 🎓 **Giáo dục**: Trường đại học, cao đẳng, trung học phổ thông
+- 🏥 **Y tế**: Bệnh viện, phòng khám, trung tâm y tế
+- 🛒 **Thương mại điện tử**: Sàn TMĐT, cửa hàng online
+- 🏢 **Doanh nghiệp**: Từ startup đến tập đoàn lớn
 
-## License
+## Hỗ trợ
 
-[MIT](LICENSE)
+Chúng tôi cam kết cung cấp dịch vụ hỗ trợ tốt nhất cho khách hàng:
+
+### 📞 Hotline hỗ trợ
+- **24/7**: 1900 8000 (miễn phí)
+- **Email**: support@viettelidc.com.vn
+- **Ticket**: Qua Portal hoặc App mobile
+
+### 📋 Tài liệu và hướng dẫn
+- [Câu hỏi thường gặp (FAQ)](support.md#faq)
+- [Video hướng dẫn](support.md#videos)
+- [Webinar và Training](support.md#training)
+
+### 🤝 Dịch vụ tư vấn
+- Tư vấn giải pháp miễn phí
+- Đánh giá và thiết kế hệ thống
+- Hỗ trợ migration từ hệ thống cũ
+
+## Cập nhật và phiên bản
+
+Tài liệu này được cập nhật thường xuyên để phản ánh các tính năng mới và cải tiến của dịch vụ.
+
+- **Phiên bản hiện tại**: 1.0.0
+- **Cập nhật lần cuối**: Tháng 12/2024
+- **Tần suất cập nhật**: Hàng tháng
+
+## Bản quyền
+
+© 2024 Viettel IDC. Tất cả các quyền được bảo lưu.
+
+Tài liệu này được cung cấp cho mục đích hướng dẫn sử dụng dịch vụ và không được phép sao chép, phân phối mà không có sự đồng ý bằng văn bản từ Viettel IDC.
