@@ -12,7 +12,7 @@ describe('Creating a Docsify site (integration tests in Jest)', function () {
 
     // Verify options.markdown content was rendered
     expect(document.querySelector('#main').textContent).toContain(
-      'A magical documentation site generator',
+      'Chào mừng bạn đến với tài liệu hướng dẫn sử dụng các dịch vụ Cloud của Viettel IDC',
     );
   });
 
