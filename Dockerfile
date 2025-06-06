@@ -1,20 +1,20 @@
-# Multi-stage build for Docsify documentation
-FROM node:18-alpine AS builder
+# # Multi-stage build for Docsify documentation
+# FROM node:18-alpine AS builder
 
-# Set working directory
-WORKDIR /app
+# # Set working directory
+# WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# # Copy package files
+# COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# # Install dependencies
+# RUN npm ci --only=production
 
-# Install docsify-cli globally
-RUN npm install -g docsify-cli
+# # Install docsify-cli globally
+# RUN npm install -g docsify-cli
 
 # Production stage
-FROM node:18-alpine AS production
+FROM node:24-alpine
 
 # Install docsify-cli globally
 RUN npm install -g docsify-cli
