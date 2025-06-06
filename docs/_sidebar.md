@@ -54,6 +54,7 @@
   * vMonitoring (CloudWatch)
     * [Giới thiệu](cloud/cloudwatch.md)
     * [Tạo Dashboard](cloud/cloudwatch/create-dashboard.md)
+    * [Các loại Widget](cloud/cloudwatch/widget-types.md)
     * [Thiết lập Cảnh báo](cloud/cloudwatch/set-alerts.md)
     * [Quản lý Log](cloud/cloudwatch/manage-logs.md)
     * [Phân tích Metrics](cloud/cloudwatch/analyze-metrics.md)
