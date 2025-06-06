@@ -37,6 +37,7 @@
       * [PostgreSQL](cloud/vdbs/postgresql.md)
       * [MongoDB](cloud/vdbs/mongodb.md)
       * [Redis](cloud/vdbs/redis.md)
+      * [Cấu hình ProxySQL](cloud/vdbs/proxysql-configuration.md)
       * [Tạo Database](cloud/vdbs/create-database.md)
       * [Sao lưu và Khôi phục](cloud/vdbs/backup-restore.md)
       * [Cấu hình Replica](cloud/vdbs/configure-replica.md)
