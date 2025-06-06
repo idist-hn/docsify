@@ -2,6 +2,82 @@
 
 Viettel IDC cung cấp nhiều kênh hỗ trợ khác nhau để đảm bảo khách hàng luôn nhận được sự trợ giúp kịp thời và hiệu quả khi cần thiết. Đội ngũ kỹ thuật của chúng tôi sẵn sàng hỗ trợ 24/7 cho mọi vấn đề liên quan đến dịch vụ Cloud.
 
+## 🔄 Quy trình hỗ trợ khách hàng
+
+```mermaid
+flowchart TD
+    A[🚨 Khách hàng gặp vấn đề] --> B{📞 Kênh liên hệ}
+
+    B -->|Hotline| C[📞 1900 8000]
+    B -->|Email| D[📧 support@viettelidc.com.vn]
+    B -->|Portal| E[🌐 Ticket System]
+    B -->|Chat| F[💬 Live Chat]
+
+    C --> G[👨‍💼 Call Center]
+    D --> H[📨 Email Support]
+    E --> I[🎫 Ticket Management]
+    F --> J[💬 Chat Support]
+
+    G --> K{🔍 Phân loại mức độ}
+    H --> K
+    I --> K
+    J --> K
+
+    K -->|Critical| L[🚨 Level 1 - 15 phút]
+    K -->|High| M[⚡ Level 2 - 1 giờ]
+    K -->|Medium| N[⏰ Level 3 - 4 giờ]
+    K -->|Low| O[📅 Level 4 - 24 giờ]
+
+    L --> P[👨‍🔧 Senior Engineer]
+    M --> Q[👨‍💻 Technical Engineer]
+    N --> R[👨‍💼 Support Specialist]
+    O --> S[📚 Documentation Team]
+
+    P --> T{🔧 Có thể giải quyết?}
+    Q --> T
+    R --> T
+    S --> T
+
+    T -->|Có| U[✅ Giải quyết vấn đề]
+    T -->|Không| V[⬆️ Escalate lên cấp cao]
+
+    V --> W[👨‍💼 Technical Manager]
+    W --> X{🔍 Phân tích sâu}
+
+    X -->|Cần vendor| Y[🤝 Liên hệ vendor]
+    X -->|Cần R&D| Z[🔬 R&D Team]
+    X -->|Cần infra| AA[🏗️ Infrastructure Team]
+
+    Y --> BB[🔧 Vendor Support]
+    Z --> CC[🧪 Research & Fix]
+    AA --> DD[⚙️ Infrastructure Fix]
+
+    BB --> U
+    CC --> U
+    DD --> U
+
+    U --> EE[📋 Cập nhật ticket]
+    EE --> FF[📞 Thông báo khách hàng]
+    FF --> GG[📊 Ghi nhận giải pháp]
+    GG --> HH[📈 Báo cáo SLA]
+
+    HH --> II{😊 Khách hàng hài lòng?}
+    II -->|Có| JJ[✅ Đóng ticket]
+    II -->|Không| KK[🔄 Tiếp tục hỗ trợ]
+    KK --> T
+
+    JJ --> LL[📋 Follow-up sau 24h]
+    LL --> MM[📊 Đánh giá chất lượng]
+    MM --> NN[📈 Cải tiến quy trình]
+
+    style L fill:#ffcdd2
+    style M fill:#ffe0b2
+    style N fill:#fff9c4
+    style O fill:#e8f5e8
+    style U fill:#c8e6c9
+    style JJ fill:#a5d6a7
+```
+
 ## Kênh hỗ trợ
 
 ### Trung tâm hỗ trợ khách hàng

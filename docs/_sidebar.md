@@ -91,6 +91,7 @@
   * [Monitoring Tools](tools/monitoring-tools.md)
 
 * **📚 Hướng dẫn sử dụng**
+  * [🔄 Quy trình sử dụng dịch vụ](guides/service-workflow.md)
   * [Đăng ký tài khoản](guides/registration.md)
   * [Quản lý tài nguyên](guides/resource-management.md)
   * [Thanh toán & Hóa đơn](guides/billing.md)

@@ -2,6 +2,34 @@
 
 Để bắt đầu sử dụng dịch vụ Cloud của Viettel IDC, bạn cần đăng ký một tài khoản trên hệ thống Cloud Management Platform. Bài viết này sẽ hướng dẫn bạn các bước đăng ký tài khoản một cách chi tiết.
 
+## 🔄 Quy trình đăng ký tổng quan
+
+```mermaid
+flowchart TD
+    A[🌐 Truy cập Portal] --> B[📝 Điền thông tin đăng ký]
+    B --> C[📧 Xác thực email]
+    C --> D[📱 Xác thực số điện thoại]
+    D --> E[🏢 Xác thực doanh nghiệp]
+    E --> F[💳 Thiết lập thanh toán]
+    F --> G[✅ Hoàn tất đăng ký]
+    G --> H[🚀 Bắt đầu sử dụng dịch vụ]
+
+    style A fill:#e3f2fd
+    style G fill:#c8e6c9
+    style H fill:#fff3e0
+```
+
+### ⏱️ Thời gian hoàn thành
+- **Tài khoản cá nhân**: 10-15 phút
+- **Tài khoản doanh nghiệp**: 15-30 phút (+ 1-2 ngày xác thực)
+
+### 📋 Checklist chuẩn bị
+- [ ] Email hợp lệ và có thể truy cập
+- [ ] Số điện thoại di động
+- [ ] Giấy tờ tùy thân (CMND/CCCD)
+- [ ] Giấy phép kinh doanh (đối với doanh nghiệp)
+- [ ] Phương thức thanh toán
+
 ## Yêu cầu
 
 Trước khi đăng ký, bạn cần chuẩn bị:

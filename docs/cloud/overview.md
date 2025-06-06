@@ -140,11 +140,48 @@ Viettel IDC Cloud là nền tảng điện toán đám mây toàn diện, cung c
 
 ## Getting Started
 
-1. **Đăng ký tài khoản** tại [portal.viettelidc.com.vn](https://portal.viettelidc.com.vn)
-2. **Xác thực thông tin** và kích hoạt tài khoản
-3. **Chọn dịch vụ** phù hợp với nhu cầu
-4. **Cấu hình tài nguyên** theo yêu cầu
-5. **Triển khai** và bắt đầu sử dụng
+### 🚀 Quy trình bắt đầu sử dụng dịch vụ
+
+```mermaid
+flowchart LR
+    A[📞 Tư vấn] --> B[📝 Đăng ký]
+    B --> C[💳 Thanh toán]
+    C --> D[⚙️ Triển khai]
+    D --> E[🚀 Sử dụng]
+    E --> F[📊 Giám sát]
+    F --> G[🔄 Tối ưu]
+
+    style A fill:#e3f2fd
+    style E fill:#c8e6c9
+    style G fill:#fff3e0
+```
+
+### 📋 Các bước chi tiết
+
+1. **Tư vấn và đánh giá** (1-3 ngày)
+   - Liên hệ hotline 1900 8000
+   - Phân tích nhu cầu và yêu cầu
+   - Đề xuất giải pháp phù hợp
+
+2. **Đăng ký tài khoản** (15-30 phút)
+   - Truy cập [portal.viettelidc.com.vn](https://portal.viettelidc.com.vn)
+   - Xác thực email và số điện thoại
+   - Hoàn tất thông tin doanh nghiệp
+
+3. **Thanh toán và hợp đồng** (1-2 giờ)
+   - Chọn phương thức thanh toán
+   - Ký hợp đồng điện tử
+   - Xác nhận đơn hàng
+
+4. **Triển khai dịch vụ** (2-5 ngày)
+   - Provisioning tài nguyên
+   - Cấu hình và testing
+   - Bàn giao thông tin truy cập
+
+5. **Sử dụng và vận hành** (Ongoing)
+   - Truy cập dashboard quản lý
+   - Giám sát và tối ưu hóa
+   - Hỗ trợ 24/7 khi cần thiết
 
 ## Liên hệ
 
