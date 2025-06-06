@@ -35,6 +35,7 @@ Repository này được xây dựng bằng **Docsify** - một static site gene
 ## 📖 Nội dung tài liệu
 
 ### Dịch vụ Cloud chính
+
 - **vServer**: Máy chủ ảo (VPS) linh hoạt và mạnh mẽ
 - **vStorage**: Lưu trữ đám mây an toàn, mở rộng không giới hạn
 - **vContainer**: Nền tảng container hóa hiện đại
@@ -43,6 +44,7 @@ Repository này được xây dựng bằng **Docsify** - một static site gene
 - **vKubernetes**: Orchestration platform cho container
 
 ### Hướng dẫn chi tiết
+
 - 📋 **Hướng dẫn cơ bản**: Đăng ký, quản lý tài khoản, thanh toán
 - ⚙️ **Hướng dẫn kỹ thuật**: API, CLI, SDK, best practices
 - 🔧 **Triển khai**: Deployment, monitoring, backup, security
@@ -50,6 +52,7 @@ Repository này được xây dựng bằng **Docsify** - một static site gene
 ## 🌐 Truy cập tài liệu
 
 ### Online Documentation
+
 Truy cập tài liệu trực tuyến tại: **[Viettel IDC Cloud Docs](https://idist-hn.github.io/docsify/)**
 
 ### Local Development
@@ -120,6 +123,7 @@ docs/
 Chúng tôi hoan nghênh mọi đóng góp để cải thiện tài liệu này:
 
 ### Cách đóng góp
+
 1. **Fork** repository này
 2. **Tạo branch** mới: `git checkout -b feature/improvement`
 3. **Commit** thay đổi: `git commit -m 'Add some improvement'`
@@ -127,6 +131,7 @@ Chúng tôi hoan nghênh mọi đóng góp để cải thiện tài liệu này:
 5. **Tạo Pull Request**
 
 ### Quy tắc đóng góp
+
 - ✅ Sử dụng tiếng Việt cho nội dung chính
 - ✅ Tuân thủ format Markdown chuẩn
 - ✅ Kiểm tra chính tả và ngữ pháp
@@ -134,7 +139,9 @@ Chúng tôi hoan nghênh mọi đóng góp để cải thiện tài liệu này:
 - ✅ Cập nhật sidebar và navbar nếu thêm trang mới
 
 ### Báo lỗi
+
 Nếu phát hiện lỗi trong tài liệu, vui lòng:
+
 - Tạo [Issue](https://github.com/idist-hn/docsify/issues) mới
 - Mô tả chi tiết vấn đề
 - Đính kèm screenshot nếu có
@@ -149,6 +156,7 @@ Nếu phát hiện lỗi trong tài liệu, vui lòng:
 ## 📝 Changelog
 
 ### v1.0.0 (Tháng 12/2024)
+
 - ✅ Khởi tạo repository tài liệu
 - ✅ Thêm tài liệu cơ bản cho các dịch vụ Cloud
 - ✅ Thiết lập Docsify với theme tùy chỉnh

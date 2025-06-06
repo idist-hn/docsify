@@ -20,10 +20,12 @@ flowchart TD
 ```
 
 ### ⏱️ Thời gian hoàn thành
+
 - **Tài khoản cá nhân**: 10-15 phút
 - **Tài khoản doanh nghiệp**: 15-30 phút (+ 1-2 ngày xác thực)
 
 ### 📋 Checklist chuẩn bị
+
 - [ ] Email hợp lệ và có thể truy cập
 - [ ] Số điện thoại di động
 - [ ] Giấy tờ tùy thân (CMND/CCCD)

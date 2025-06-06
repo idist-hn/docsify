@@ -38,20 +38,24 @@ docker-compose up -d --build
 ## 📋 Container Specifications
 
 ### Base Image
+
 - **OS**: Alpine Linux 3.18
 - **Runtime**: Node.js 18 LTS
 - **Size**: ~85MB (compressed)
 - **Architecture**: Multi-platform (amd64, arm64)
 
 ### Exposed Ports
+
 - **3001**: Docsify HTTP server
 - **Health Check**: HTTP GET /
 
 ### Environment Variables
+
 - `NODE_ENV=production`
 - `PORT=3001`
 
 ### Volume Mounts
+
 - `/app/docs`: Documentation files
 - `/app/node_modules`: Node.js dependencies
 
@@ -89,10 +93,10 @@ services:
   viettel-idc-docs:
     build: .
     ports:
-      - "3001:3001"
+      - '3001:3001'
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:3001"]
+      test: ['CMD', 'wget', '--spider', 'http://localhost:3001']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -150,17 +154,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Build Docker image
         run: docker build -t viettel-idc-docs:${{ github.sha }} .
-      
+
       - name: Test container
         run: |
           docker run -d -p 3001:3001 --name test-container viettel-idc-docs:${{ github.sha }}
           sleep 10
           curl -f http://localhost:3001 || exit 1
           docker stop test-container
-      
+
       - name: Push to registry
         run: |
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
@@ -187,22 +191,22 @@ spec:
         app: viettel-idc-docs
     spec:
       containers:
-      - name: docs
-        image: viettel-idc-docs:latest
-        ports:
-        - containerPort: 3001
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 3001
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 3001
-          initialDelaySeconds: 5
-          periodSeconds: 5
+        - name: docs
+          image: viettel-idc-docs:latest
+          ports:
+            - containerPort: 3001
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3001
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3001
+            initialDelaySeconds: 5
+            periodSeconds: 5
 ---
 apiVersion: v1
 kind: Service
@@ -212,8 +216,8 @@ spec:
   selector:
     app: viettel-idc-docs
   ports:
-  - port: 80
-    targetPort: 3001
+    - port: 80
+      targetPort: 3001
   type: LoadBalancer
 ```
 
@@ -274,14 +278,14 @@ services:
   prometheus:
     image: prom/prometheus
     ports:
-      - "9090:9090"
+      - '9090:9090'
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
 
   grafana:
     image: grafana/grafana
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
 ```
@@ -302,6 +306,7 @@ docker run -d \
 ### Common Issues
 
 #### Container won't start
+
 ```bash
 # Check logs
 docker logs viettel-idc-docs-container
@@ -314,6 +319,7 @@ docker inspect viettel-idc-docs-container
 ```
 
 #### Port conflicts
+
 ```bash
 # Check port usage
 netstat -tulpn | grep 3001
@@ -324,6 +330,7 @@ docker run -p 3002:3001 viettel-idc-docs:latest
 ```
 
 #### Health check failures
+
 ```bash
 # Manual health check
 docker exec viettel-idc-docs-container wget --spider http://localhost:3001

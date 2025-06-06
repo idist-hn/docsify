@@ -84,7 +84,7 @@ flowchart TD
 
 - **Hotline**: 1800 xxxx (miễn phí, 24/7)
 - **Email**: support@viettelidc.com.vn
-- **Thời gian phản hồi**: 
+- **Thời gian phản hồi**:
   - Sự cố nghiêm trọng: < 15 phút
   - Sự cố thông thường: < 2 giờ
   - Yêu cầu tư vấn: < 24 giờ

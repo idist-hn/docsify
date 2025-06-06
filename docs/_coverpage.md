@@ -1,8 +1,8 @@
 <!-- _coverpage.md -->
 
-![logo](media/viettel-idc-logo.svg)
+![logo](_media/logo-idc.svg)
 
-# Viettel IDC Cloud <small>Documentation</small>
+# Viettel IDC Cloud <small>5.0.0-rc.1</small>
 
 > Tài liệu hướng dẫn sử dụng dịch vụ Cloud của Viettel IDC
 

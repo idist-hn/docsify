@@ -1,14 +1,10 @@
 {
-  "name": "docsify",
-  "version": "5.0.0-rc.1",
+  "name": "viettel-idc-docs",
+  "version": "1.0.0-rc.1",
   "description": "A magical documentation generator.",
-  "homepage": "https://docsify.js.org",
-  "repository": "github:docsifyjs/docsify",
-  "authors": "https://github.com/docsifyjs/docsify/graphs/contributors",
+  "homepage": "https://docs.viettelidc.com.vn",
+  "repository": "github:idist-hn/docsify",
   "license": "MIT",
-  "collective": {
-    "url": "https://opencollective.com/docsify"
-  },
   "keywords": [
     "client",
     "creator",

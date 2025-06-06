@@ -13,24 +13,24 @@ graph TB
         A2[App Server 2]
         A3[App Server 3]
     end
-    
+
     subgraph "Proxy Layer"
         P[ProxySQL<br/>10.4.1.147]
     end
-    
+
     subgraph "Database Layer"
         M[MySQL Master<br/>10.4.1.174<br/>Hostgroup: 1]
         S[MySQL Slave<br/>10.4.1.215<br/>Hostgroup: 2]
     end
-    
+
     A1 --> P
     A2 --> P
     A3 --> P
-    
+
     P -->|Write Queries| M
     P -->|Read Queries| S
     M -->|Replication| S
-    
+
     style P fill:#e3f2fd
     style M fill:#c8e6c9
     style S fill:#fff3e0
@@ -38,11 +38,11 @@ graph TB
 
 ## Thông tin môi trường
 
-| Component | IP Address | Port | Role |
-|-----------|------------|------|------|
-| **ProxySQL** | 10.4.1.147 | 6033 (MySQL), 6032 (Admin) | Proxy Server |
-| **MySQL Master** | 10.4.1.174 | 3306 | Write Operations |
-| **MySQL Slave** | 10.4.1.215 | 3306 | Read Operations |
+| Component        | IP Address | Port                       | Role             |
+| ---------------- | ---------- | -------------------------- | ---------------- |
+| **ProxySQL**     | 10.4.1.147 | 6033 (MySQL), 6032 (Admin) | Proxy Server     |
+| **MySQL Master** | 10.4.1.174 | 3306                       | Write Operations |
+| **MySQL Slave**  | 10.4.1.215 | 3306                       | Read Operations  |
 
 ## Quy trình cấu hình tổng quan
 
@@ -133,6 +133,7 @@ WantedBy=multi-user.target
 ### 3. Cấu hình giới hạn hệ thống
 
 #### Cấu hình limits trong systemd
+
 ```ini
 # Thêm vào /lib/systemd/system/proxysql.service trong section [Service]
 LimitMEMLOCK=512M
@@ -140,6 +141,7 @@ LimitNOFILE=100000
 ```
 
 #### Cấu hình system limits
+
 ```bash
 # Thêm vào /etc/security/limits.conf
 *          soft    nofile      100000
@@ -177,13 +179,14 @@ mysql -u admin -padmin -h 127.0.0.1 -P6032 --prompt='ProxySQL Admin> '
 ### 2. Cấu hình MySQL Servers
 
 #### Khai báo MySQL servers
+
 ```sql
 -- Xóa cấu hình cũ (nếu có)
 DELETE FROM mysql_servers;
 
 -- Thêm MySQL Master và Slave
-INSERT INTO mysql_servers (hostgroup_id, hostname, port, weight, status, comment) 
-VALUES 
+INSERT INTO mysql_servers (hostgroup_id, hostname, port, weight, status, comment)
+VALUES
 (1, '10.4.1.174', 3306, 1000, 'ONLINE', 'MySQL Master - Write Operations'),
 (2, '10.4.1.215', 3306, 1000, 'ONLINE', 'MySQL Slave - Read Operations');
 
@@ -202,7 +205,7 @@ SELECT * FROM mysql_servers;
 ```sql
 -- Tạo user cho ứng dụng
 INSERT INTO mysql_users (username, password, default_hostgroup, max_connections, comment)
-VALUES 
+VALUES
 ('app_user', 'secure_password', 1, 200, 'Application user'),
 ('readonly_user', 'readonly_password', 2, 100, 'Read-only user');
 
@@ -219,7 +222,7 @@ SELECT * FROM mysql_users;
 ```sql
 -- Rule 1: Route SELECT queries to slave (hostgroup 2)
 INSERT INTO mysql_query_rules (rule_id, active, match_pattern, destination_hostgroup, apply, comment)
-VALUES 
+VALUES
 (1, 1, '^SELECT.*', 2, 1, 'Route SELECT to slave'),
 (2, 1, '^INSERT.*|^UPDATE.*|^DELETE.*|^CREATE.*|^DROP.*|^ALTER.*', 1, 1, 'Route write operations to master');
 
@@ -372,6 +375,7 @@ SAVE MYSQL VARIABLES TO DISK;
 ### 1. Common Issues
 
 #### ProxySQL không start được
+
 ```bash
 # Kiểm tra logs
 sudo journalctl -u proxysql -f
@@ -384,6 +388,7 @@ sudo chown -R proxysql:proxysql /var/lib/proxysql
 ```
 
 #### Connection issues
+
 ```sql
 -- Kiểm tra connection pool
 SELECT * FROM stats_mysql_connection_pool;
@@ -396,6 +401,7 @@ PROXYSQL FLUSH MYSQL CONNECTIONS;
 ```
 
 #### Query routing không hoạt động
+
 ```sql
 -- Kiểm tra query rules
 SELECT * FROM mysql_query_rules WHERE active=1;

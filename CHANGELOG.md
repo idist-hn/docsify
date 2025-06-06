@@ -1,3 +1,27 @@
+# [5.0.0-rc.2](https://github.com/docsifyjs/docsify/compare/v5.0.0-rc.1...v5.0.0-rc.2) (2024-12-19)
+
+### Features
+
+* **testing:** Add comprehensive unit tests for page documentation ([#XXXX](https://github.com/docsifyjs/docsify/issues/XXXX)) ([XXXXXXX](https://github.com/docsifyjs/docsify/commit/XXXXXXX))
+  - Add unit tests for page rendering functionality
+  - Add unit tests for page navigation and routing
+  - Add unit tests for page content validation
+  - Add unit tests for page structure and metadata
+  - Add unit tests for cloud services pages
+  - Improve test coverage for documentation pages
+  - Ensure consistent page behavior across different scenarios
+
+### Bug Fixes
+
+* **tests:** Fix test assertions for empty page content handling ([XXXXXXX](https://github.com/docsifyjs/docsify/commit/XXXXXXX))
+* **tests:** Fix page layout component selectors in tests ([XXXXXXX](https://github.com/docsifyjs/docsify/commit/XXXXXXX))
+* **tests:** Fix history router mode test timeout issues ([XXXXXXX](https://github.com/docsifyjs/docsify/commit/XXXXXXX))
+
+### Documentation
+
+* **readme:** Update version to 1.1.0 and add testing features ([XXXXXXX](https://github.com/docsifyjs/docsify/commit/XXXXXXX))
+* **docs:** Add information about new unit testing capabilities
+
 # [5.0.0-rc.1](https://github.com/docsifyjs/docsify/compare/v4.13.1...v5.0.0-rc.1) (2025-05-27)
 
 

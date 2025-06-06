@@ -7,6 +7,7 @@ Dashboard CloudWatch của Viettel IDC là công cụ trực quan hóa dữ li�
 ## Tính năng chính
 
 ### 📊 Visualization Types
+
 - **Line Charts**: Biểu đồ đường cho metrics theo thời gian
 - **Bar Charts**: Biểu đồ cột so sánh giá trị
 - **Pie Charts**: Biểu đồ tròn phân bố tỷ lệ
@@ -15,6 +16,7 @@ Dashboard CloudWatch của Viettel IDC là công cụ trực quan hóa dữ li�
 - **Text Widgets**: Thêm ghi chú và mô tả
 
 ### 🎨 Customization Options
+
 - **Flexible Layout**: Drag & drop để sắp xếp widgets
 - **Color Themes**: Nhiều theme màu sắc chuyên nghiệp
 - **Time Range**: Tùy chỉnh khoảng thời gian hiển thị
@@ -180,12 +182,14 @@ flowchart TD
 ### Bước 2: Cấu hình Dashboard cơ bản
 
 #### 📝 Thông tin Dashboard
+
 - **Tên Dashboard**: Tên mô tả rõ ràng (VD: "Production Server Monitoring")
 - **Mô tả**: Mô tả ngắn gọn về mục đích sử dụng
 - **Tags**: Gắn thẻ để phân loại và tìm kiếm
 - **Permissions**: Thiết lập quyền truy cập
 
 #### 🎨 Layout Settings
+
 - **Grid Size**: 12 columns x unlimited rows
 - **Widget Spacing**: Khoảng cách giữa các widgets
 - **Background**: Màu nền dashboard
@@ -194,6 +198,7 @@ flowchart TD
 ### Bước 3: Thêm Widgets
 
 #### 📊 Line Chart Widget
+
 ```json
 {
   "type": "line_chart",
@@ -213,6 +218,7 @@ flowchart TD
 ```
 
 **Cấu hình:**
+
 - **Data Source**: Chọn nguồn dữ liệu (CloudWatch Metrics)
 - **Metrics**: Chọn metrics cần hiển thị
 - **Time Range**: 1h, 6h, 24h, 7d, 30d
@@ -220,6 +226,7 @@ flowchart TD
 - **Line Style**: Solid, Dashed, Dotted
 
 #### 📈 Bar Chart Widget
+
 ```json
 {
   "type": "bar_chart",
@@ -238,12 +245,14 @@ flowchart TD
 ```
 
 **Tùy chọn:**
+
 - **Orientation**: Vertical/Horizontal
 - **Stacking**: None, Normal, Percent
 - **Color Scheme**: Automatic, Custom
 - **Data Labels**: Show/Hide values
 
 #### 🥧 Pie Chart Widget
+
 ```json
 {
   "type": "pie_chart",
@@ -263,6 +272,7 @@ flowchart TD
 ```
 
 #### 🎯 Gauge Widget
+
 ```json
 {
   "type": "gauge",
@@ -274,8 +284,8 @@ flowchart TD
   "min_value": 0,
   "max_value": 100,
   "thresholds": [
-    {"value": 70, "color": "yellow"},
-    {"value": 90, "color": "red"}
+    { "value": 70, "color": "yellow" },
+    { "value": 90, "color": "red" }
   ]
 }
 ```
@@ -283,31 +293,34 @@ flowchart TD
 ### Bước 4: Cấu hình nâng cao
 
 #### 🔍 Filters và Variables
+
 ```yaml
 variables:
-  - name: "environment"
-    type: "query"
-    query: "SELECT DISTINCT environment FROM instances"
-    default: "production"
-  
-  - name: "instance_type"
-    type: "custom"
-    options: ["t3.micro", "t3.small", "t3.medium"]
-    default: "t3.small"
+  - name: 'environment'
+    type: 'query'
+    query: 'SELECT DISTINCT environment FROM instances'
+    default: 'production'
+
+  - name: 'instance_type'
+    type: 'custom'
+    options: ['t3.micro', 't3.small', 't3.medium']
+    default: 't3.small'
 
 filters:
-  - field: "environment"
-    operator: "equals"
-    value: "$environment"
+  - field: 'environment'
+    operator: 'equals'
+    value: '$environment'
 ```
 
 #### ⏰ Time Controls
+
 - **Global Time Range**: Áp dụng cho toàn bộ dashboard
 - **Widget Time Override**: Ghi đè thời gian cho widget cụ thể
 - **Relative Time**: Last 1h, 6h, 24h, 7d, 30d
 - **Absolute Time**: Chọn thời gian cụ thể
 
 #### 🔄 Auto Refresh
+
 ```json
 {
   "auto_refresh": {
@@ -321,6 +334,7 @@ filters:
 ## Templates Dashboard có sẵn
 
 ### 🖥️ Server Monitoring Template
+
 - **CPU Utilization**: Line chart theo thời gian
 - **Memory Usage**: Gauge với thresholds
 - **Disk I/O**: Bar chart read/write operations
@@ -328,6 +342,7 @@ filters:
 - **System Load**: Number widget load average
 
 ### 🌐 Application Performance Template
+
 - **Response Time**: Line chart với percentiles
 - **Request Rate**: Bar chart requests/second
 - **Error Rate**: Pie chart error distribution
@@ -335,6 +350,7 @@ filters:
 - **Cache Hit Rate**: Number widget percentage
 
 ### 🔒 Security Monitoring Template
+
 - **Failed Login Attempts**: Line chart theo thời gian
 - **Security Events**: Bar chart by severity
 - **Firewall Blocks**: Pie chart by source
@@ -342,6 +358,7 @@ filters:
 - **Vulnerability Scan Results**: Heatmap
 
 ### ☁️ Cloud Infrastructure Template
+
 - **Resource Utilization**: Multi-line chart
 - **Cost Analysis**: Stacked bar chart
 - **Service Health**: Status grid
@@ -351,18 +368,21 @@ filters:
 ## Best Practices
 
 ### 📐 Layout Design
+
 1. **Logical Grouping**: Nhóm widgets liên quan gần nhau
 2. **Visual Hierarchy**: Đặt metrics quan trọng ở vị trí nổi bật
 3. **Consistent Sizing**: Sử dụng kích thước widget nhất quán
 4. **White Space**: Để khoảng trống hợp lý giữa các widgets
 
 ### 🎨 Visual Guidelines
+
 1. **Color Consistency**: Sử dụng màu sắc nhất quán
 2. **Meaningful Titles**: Đặt tên widget rõ ràng, mô tả
 3. **Appropriate Chart Types**: Chọn loại biểu đồ phù hợp với dữ liệu
 4. **Threshold Indicators**: Sử dụng màu cảnh báo hợp lý
 
 ### ⚡ Performance Optimization
+
 1. **Limit Widgets**: Không quá 20 widgets trên 1 dashboard
 2. **Optimize Queries**: Sử dụng aggregation phù hợp
 3. **Reasonable Refresh**: Không refresh quá thường xuyên
@@ -371,12 +391,14 @@ filters:
 ## Chia sẻ và Collaboration
 
 ### 👥 Sharing Options
+
 - **Public Link**: Tạo link công khai (read-only)
 - **Team Access**: Chia sẻ với team members
 - **Role-based Permissions**: Viewer, Editor, Admin
 - **Embed Code**: Nhúng vào website/application
 
 ### 📧 Notifications
+
 ```json
 {
   "notifications": {
@@ -395,6 +417,7 @@ filters:
 ```
 
 ### 📱 Mobile Access
+
 - **Responsive Design**: Tự động điều chỉnh cho mobile
 - **Touch Gestures**: Zoom, pan, scroll
 - **Offline Viewing**: Cache dữ liệu cho offline
@@ -403,12 +426,14 @@ filters:
 ## Export và Backup
 
 ### 📤 Export Options
+
 - **PDF Report**: Xuất dashboard thành PDF
 - **PNG/JPEG**: Xuất từng widget hoặc toàn bộ
 - **CSV Data**: Xuất dữ liệu thô
 - **JSON Config**: Backup cấu hình dashboard
 
 ### 💾 Backup Strategy
+
 ```bash
 # Backup dashboard configuration
 curl -X GET "https://api.viettelidc.com.vn/cloudwatch/dashboards/export" \
@@ -427,24 +452,28 @@ curl -X POST "https://api.viettelidc.com.vn/cloudwatch/dashboards/import" \
 ### ❌ Common Issues
 
 #### Dashboard không load
+
 - **Kiểm tra permissions**: Đảm bảo có quyền truy cập
 - **Network connectivity**: Kiểm tra kết nối internet
 - **Browser cache**: Xóa cache và reload
 - **API limits**: Kiểm tra rate limiting
 
 #### Dữ liệu không hiển thị
+
 - **Metric availability**: Đảm bảo metrics đang được thu thập
 - **Time range**: Kiểm tra khoảng thời gian phù hợp
 - **Filters**: Xem lại các bộ lọc đã áp dụng
 - **Data retention**: Kiểm tra chính sách lưu trữ dữ liệu
 
 #### Performance issues
+
 - **Too many widgets**: Giảm số lượng widgets
 - **Complex queries**: Đơn giản hóa queries
 - **Refresh frequency**: Tăng interval refresh
 - **Browser resources**: Kiểm tra memory/CPU browser
 
 ### 🔧 Debug Tools
+
 ```javascript
 // Enable debug mode
 localStorage.setItem('cloudwatch_debug', 'true');
@@ -459,6 +488,7 @@ CloudWatch.validateDashboard(config);
 ## API Integration
 
 ### 🔌 REST API
+
 ```bash
 # Create dashboard
 POST /api/v1/dashboards
@@ -479,13 +509,14 @@ DELETE /api/v1/dashboards/{id}
 ```
 
 ### 📊 Widget API
+
 ```javascript
 // Add widget programmatically
 const widget = {
   type: 'line_chart',
   title: 'CPU Usage',
   metrics: ['cpu.utilization'],
-  position: {x: 0, y: 0, width: 6, height: 4}
+  position: { x: 0, y: 0, width: 6, height: 4 },
 };
 
 dashboard.addWidget(widget);

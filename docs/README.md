@@ -41,16 +41,19 @@ Chào mừng bạn đến với tài liệu hướng dẫn sử dụng các dị
 Để bắt đầu sử dụng dịch vụ Cloud của Viettel IDC, bạn có thể làm theo các bước sau:
 
 ### 1. Đăng ký tài khoản
+
 - Truy cập [Portal Viettel IDC Cloud](https://portal.viettelidc.com.vn)
 - Đăng ký tài khoản mới hoặc đăng nhập
 - Xác thực thông tin và kích hoạt tài khoản
 
 ### 2. Khởi tạo dịch vụ đầu tiên
+
 - Chọn dịch vụ phù hợp với nhu cầu
 - Cấu hình thông số kỹ thuật
 - Thanh toán và triển khai
 
 ### 3. Quản lý và giám sát
+
 - Sử dụng Dashboard để quản lý tài nguyên
 - Thiết lập giám sát và cảnh báo
 - Tối ưu hóa hiệu năng và chi phí
@@ -60,12 +63,14 @@ Chào mừng bạn đến với tài liệu hướng dẫn sử dụng các dị
 ## Tài liệu hướng dẫn
 
 ### 📚 Hướng dẫn cơ bản
+
 - [Giới thiệu về Viettel IDC Cloud](introduction.md)
 - [Đăng ký và kích hoạt tài khoản](guides/registration.md)
 - [Quản lý tài nguyên](guides/resource-management.md)
 - [Thanh toán và hóa đơn](guides/billing.md)
 
 ### ☁️ Dịch vụ Cloud
+
 - [Tổng quan dịch vụ Cloud](cloud/overview.md)
 - [vServer - Máy chủ ảo](cloud/vserver.md)
 - [vStorage - Lưu trữ đám mây](cloud/vstorage.md)
@@ -75,12 +80,14 @@ Chào mừng bạn đến với tài liệu hướng dẫn sử dụng các dị
 - [vKubernetes - Orchestration](cloud/voks.md)
 
 ### 🛠️ Hướng dẫn kỹ thuật
+
 - [API Documentation](guides/api.md)
 - [CLI Tools](guides/cli.md)
 - [SDK và Libraries](guides/sdk.md)
 - [Best Practices](guides/best-practices.md)
 
 ### 🔧 Triển khai và vận hành
+
 - [Deployment Guide](guides/deployment.md)
 - [Monitoring và Logging](guides/monitoring.md)
 - [Backup và Recovery](guides/backup.md)
@@ -109,16 +116,19 @@ Viettel IDC Cloud đã và đang phục vụ hàng nghìn khách hàng từ nhi�
 Chúng tôi cam kết cung cấp dịch vụ hỗ trợ tốt nhất cho khách hàng:
 
 ### 📞 Hotline hỗ trợ
+
 - **24/7**: 1900 8000 (miễn phí)
 - **Email**: support@viettelidc.com.vn
 - **Ticket**: Qua Portal hoặc App mobile
 
 ### 📋 Tài liệu và hướng dẫn
+
 - [Câu hỏi thường gặp (FAQ)](support.md#faq)
 - [Video hướng dẫn](support.md#videos)
 - [Webinar và Training](support.md#training)
 
 ### 🤝 Dịch vụ tư vấn
+
 - Tư vấn giải pháp miễn phí
 - Đánh giá và thiết kế hệ thống
 - Hỗ trợ migration từ hệ thống cũ
@@ -127,9 +137,16 @@ Chúng tôi cam kết cung cấp dịch vụ hỗ trợ tốt nhất cho khách 
 
 Tài liệu này được cập nhật thường xuyên để phản ánh các tính năng mới và cải tiến của dịch vụ.
 
-- **Phiên bản hiện tại**: 1.0.0
+- **Phiên bản hiện tại**: 1.1.0
 - **Cập nhật lần cuối**: Tháng 12/2024
 - **Tần suất cập nhật**: Hàng tháng
+
+### Cập nhật mới nhất (v1.1.0)
+
+- ✅ **Triển khai Unit Tests**: Thêm bộ test toàn diện cho các page documentation
+- ✅ **Test Coverage**: Bao gồm test cho page rendering, navigation, content validation
+- ✅ **Quality Assurance**: Đảm bảo chất lượng và tính nhất quán của documentation
+- ✅ **Automated Testing**: Tích hợp CI/CD pipeline cho việc kiểm tra tự động
 
 ## Bản quyền
 

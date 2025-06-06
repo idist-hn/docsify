@@ -9,21 +9,25 @@ Viettel IDC là đơn vị hàng đầu tại Việt Nam trong lĩnh vực cung 
 Viettel IDC Cloud là nền tảng điện toán đám mây được phát triển bởi Viettel IDC, cung cấp các dịch vụ Cloud đa dạng với nhiều ưu điểm vượt trội:
 
 ### Tính sẵn sàng cao
+
 - Hạ tầng dự phòng N+1
 - SLA cam kết 99.99% uptime
 - Hệ thống giám sát 24/7
 
 ### Bảo mật tối ưu
+
 - Tuân thủ các tiêu chuẩn bảo mật quốc tế
 - Bảo vệ dữ liệu theo quy định của Việt Nam
 - Hệ thống phòng chống tấn công DDoS
 
 ### Hiệu năng vượt trội
+
 - Sử dụng công nghệ mới nhất
 - Tối ưu hóa cho thị trường Việt Nam
 - Độ trễ thấp nhờ hạ tầng trong nước
 
 ### Hỗ trợ chuyên nghiệp
+
 - Đội ngũ kỹ thuật 24/7
 - Hỗ trợ đa kênh: điện thoại, email, ticket
 - Tư vấn giải pháp phù hợp với nhu cầu
@@ -31,12 +35,15 @@ Viettel IDC Cloud là nền tảng điện toán đám mây được phát tri�
 ## Các dịch vụ Cloud chính
 
 ### vServer
+
 Dịch vụ máy chủ ảo (VPS) cho phép khách hàng triển khai máy chủ nhanh chóng với nhiều cấu hình linh hoạt, đáp ứng nhu cầu từ website nhỏ đến ứng dụng doanh nghiệp phức tạp.
 
 ### vStorage
+
 Dịch vụ lưu trữ đám mây an toàn, đáng tin cậy với khả năng mở rộng không giới hạn, giúp doanh nghiệp lưu trữ và quản lý dữ liệu hiệu quả.
 
 ### vContainer
+
 Nền tảng container hóa giúp phát triển, triển khai và quản lý các ứng dụng container một cách nhanh chóng và linh hoạt.
 
 ## Lợi ích khi sử dụng Viettel IDC Cloud

@@ -7,16 +7,19 @@ REST API đầy đủ để quản lý và tự động hóa các dịch vụ cl
 ## Tính năng chính
 
 ### 🚀 Hiệu năng cao
+
 - Hiệu năng vượt trội cho mọi workload
 - Tối ưu hóa tài nguyên tự động
 - Khả năng mở rộng linh hoạt
 
 ### 🔒 Bảo mật
+
 - Bảo mật đa lớp
 - Mã hóa dữ liệu
 - Kiểm soát truy cập
 
 ### 📊 Giám sát
+
 - Giám sát real-time
 - Cảnh báo thông minh
 - Báo cáo chi tiết
@@ -44,4 +47,3 @@ Liên hệ để được tư vấn giá cả phù hợp với nhu cầu của b
 - **Hotline**: 1900 8000
 - **Email**: support@viettelidc.com.vn
 - **Portal**: [portal.viettelidc.com.vn](https://portal.viettelidc.com.vn)
-
