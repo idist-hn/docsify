@@ -1,17 +1,14 @@
-<!-- markdownlint-disable first-line-h1 -->
+<!-- _coverpage.md -->
 
-![logo](_media/icon.svg)
+![logo](media/viettel-idc-logo.svg)
 
-# docsify <small>5.0.0-rc.1</small>
+# Viettel IDC Cloud <small>Documentation</small>
 
-> A magical documentation site generator
+> Tài liệu hướng dẫn sử dụng dịch vụ Cloud của Viettel IDC
 
-- Simple and lightweight
-- No statically built HTML files
-- Multiple themes
+- Đơn giản và dễ sử dụng
+- Hướng dẫn chi tiết
+- Cập nhật thường xuyên
 
-[Get Started](#docsify)
-[GitHub](https://github.com/docsifyjs/docsify/)
-
-<!-- ![color](#f0f0f0) -->
-<!-- ![](/_media/icon.svg) -->
+[Bắt đầu](#viettel-idc-cloud-documentation)
+[Liên hệ](https://viettelidc.com.vn/lien-he)

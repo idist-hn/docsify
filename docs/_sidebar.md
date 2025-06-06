@@ -1,31 +1,30 @@
-<!-- markdownlint-disable first-line-h1 -->
+<!-- _sidebar.md -->
 
-- Getting started
-
-  - [Quick start](quickstart.md)
-  - [Adding pages](adding-pages.md)
-  - [Cover page](cover.md)
-  - [Custom navbar](custom-navbar.md)
-
-- Customization
-
-  - [Configuration](configuration.md)
-  - [Themes](themes.md)
-  - [List of Plugins](plugins.md)
-  - [Write a Plugin](write-a-plugin.md)
-  - [Markdown configuration](markdown.md)
-  - [Language highlighting](language-highlight.md)
-  - [Emoji](emoji.md)
-
-- Guide
-
-  - [Deploy](deploy.md)
-  - [Helpers](helpers.md)
-  - [Vue compatibility](vue.md)
-  - [CDN](cdn.md)
-  - [Offline Mode (PWA)](pwa.md)
-  - [Embed Files](embed-files.md)
-  - [UI Kit](ui-kit.md)
-
-- [Awesome docsify](awesome.md)
-- [Changelog](changelog.md)
+* [Trang chủ](/)
+* [Giới thiệu](introduction.md)
+* Dịch vụ Cloud
+  * [Tổng quan](cloud/overview.md)
+  * vOKS <span class="badge beta">Beta</span>
+    * [Giới thiệu](cloud/voks.md)
+    * [Tạo Cluster](cloud/voks/create-cluster.md)
+    * [Quản lý Node](cloud/voks/manage-nodes.md)
+    * [Triển khai ứng dụng](cloud/voks/deploy-apps.md)
+    * [Giám sát và Log](cloud/voks/monitoring.md)
+  * vDBS <span class="badge new">New</span>
+    * [Giới thiệu](cloud/vdbs.md)
+    * [Tạo Database](cloud/vdbs/create-database.md)
+    * [Sao lưu và Khôi phục](cloud/vdbs/backup-restore.md)
+    * [Cấu hình Replica](cloud/vdbs/configure-replica.md)
+    * [Bảo mật](cloud/vdbs/security.md)
+  * Cloudwatch
+    * [Giới thiệu](cloud/cloudwatch.md)
+    * [Tạo Dashboard](cloud/cloudwatch/create-dashboard.md)
+    * [Thiết lập Cảnh báo](cloud/cloudwatch/set-alerts.md)
+    * [Quản lý Log](cloud/cloudwatch/manage-logs.md)
+    * [Phân tích Metrics](cloud/cloudwatch/analyze-metrics.md)
+* Hướng dẫn sử dụng
+  * [Đăng ký tài khoản](guides/registration.md)
+  * [Quản lý tài nguyên](guides/resource-management.md)
+  * [Thanh toán](guides/billing.md)
+* [FAQ](faq.md)
+* [Hỗ trợ kỹ thuật](support.md)
