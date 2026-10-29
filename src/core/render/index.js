@@ -1,13 +1,25 @@
 import tinydate from 'tinydate';
 import * as dom from '../util/dom.js';
-import { getPath, isAbsolutePath } from '../router/util.js';
+import {
+  cleanPath,
+  findLinkByHref,
+  getPath,
+  isAbsolutePath,
+} from '../router/util.js';
 import { isMobile } from '../util/env.js';
-import { isPrimitive } from '../util/core.js';
+import { isExternal, isPrimitive } from '../util/core.js';
 import { Compiler } from './compiler.js';
 import * as tpl from './tpl.js';
 import { prerenderEmbed } from './embed.js';
 
 /** @typedef {import('../Docsify.js').Constructor} Constructor */
+
+// TODO replace with Vue types if available
+/** @typedef {{ _isVue?: boolean, $destroy?: () => void }} Vue2Instance */
+/** @typedef {{ __vue__?: Vue2Instance }} WithVue2 */
+/** @typedef {{ __v_skip?: boolean }} VNode3 */
+/** @typedef {{ _vnode?: VNode3, __vue_app__?: { unmount: () => void } }} WithVue3 */
+/** @typedef {Element & WithVue2 & WithVue3} VueMountElement */
 
 /**
  * @template {!Constructor} T
@@ -15,12 +27,41 @@ import { prerenderEmbed } from './embed.js';
  */
 export function Render(Base) {
   return class Render extends Base {
+    /** @type {Compiler | undefined} */
+    compiler;
     #vueGlobalData;
 
     #addTextAsTitleAttribute(cssSelector) {
       dom.findAll(cssSelector).forEach(elm => {
-        if (!elm.title && elm.innerText) {
-          elm.title = elm.innerText;
+        const e = /** @type {HTMLElement} */ (elm);
+        if (!e.title && e.innerText) {
+          e.title = e.innerText;
+        }
+      });
+    }
+
+    /**
+     * Normalize links in loose Markdown lists from `<li><p><a>` to
+     * `<li><a>` so sidebar behavior and styling do not depend on list
+     * tightness.
+     *
+     * @param {Element} sidebarNavEl
+     */
+    #normalizeSidebarPageLinks(sidebarNavEl) {
+      dom.findAll(sidebarNavEl, 'li > p').forEach(paragraph => {
+        const link = paragraph.firstElementChild;
+        const onlyContainsLink = [...paragraph.childNodes].every(
+          node =>
+            node === link || (node.nodeType === 3 && !node.textContent?.trim()),
+        );
+
+        if (
+          !paragraph.attributes.length &&
+          paragraph.children.length === 1 &&
+          link?.tagName === 'A' &&
+          onlyContainsLink
+        ) {
+          paragraph.replaceWith(link);
         }
       });
     }
@@ -28,12 +69,14 @@ export function Render(Base) {
     #executeScript() {
       const script = dom
         .findAll('.markdown-section>script')
-        .filter(s => !/template/.test(s.type))[0];
+        .filter(
+          s => !/template/.test(/** @type {HTMLScriptElement} */ (s).type),
+        )[0];
       if (!script) {
         return false;
       }
 
-      const code = script.innerText.trim();
+      const code = /** @type {HTMLElement} */ (script).innerText.trim();
       if (!code) {
         return false;
       }
@@ -60,6 +103,9 @@ export function Render(Base) {
         window.Vue.version &&
         Number(window.Vue.version.charAt(0));
 
+      /**
+       * @param {VueMountElement} elm
+       */
       const isMountedVue = elm => {
         const isVue2 = Boolean(elm.__vue__ && elm.__vue__._isVue);
         const isVue3 = Boolean(elm._vnode && elm._vnode.__v_skip);
@@ -75,9 +121,9 @@ export function Render(Base) {
         // Destroy/unmount existing Vue instances
         for (const mountedElm of mountedElms) {
           if (vueVersion === 2) {
-            mountedElm.__vue__.$destroy();
+            /** @type {VueMountElement} */ (mountedElm).__vue__?.$destroy?.();
           } else if (vueVersion === 3) {
-            mountedElm.__vue_app__.unmount();
+            /** @type {VueMountElement} */ (mountedElm).__vue_app__?.unmount();
           }
         }
       }
@@ -159,12 +205,16 @@ export function Render(Base) {
             .filter(elm => !vueMountData.some(([e, c]) => e === elm))
             // Detect Vue content
             .filter(elm => {
+              const selector = vueComponentNames.join(',');
+              const hasComponents = selector
+                ? Boolean(elm.querySelector(selector))
+                : false;
               const isVueMount =
                 // is a component
                 elm.tagName.toLowerCase() in
                   (docsifyConfig.vueComponents || {}) ||
                 // has a component(s)
-                elm.querySelector(vueComponentNames.join(',') || null) ||
+                hasComponents ||
                 // has curly braces
                 reHasBraces.test(elm.outerHTML) ||
                 // has content directive
@@ -275,30 +325,63 @@ export function Render(Base) {
     }
 
     _renderSidebar(text) {
-      const { maxLevel, subMaxLevel, loadSidebar, hideSidebar } = this.config;
+      const {
+        collapseSidebarGroups,
+        collapsibleSidebarGroups,
+        maxLevel,
+        subMaxLevel,
+        loadSidebar,
+        hideSidebar,
+      } = this.config;
       const sidebarEl = dom.getNode('aside.sidebar');
       const sidebarNavEl = dom.getNode('.sidebar-nav');
       const sidebarToggleEl = dom.getNode('button.sidebar-toggle');
 
       if (hideSidebar) {
-        sidebarEl?.remove(sidebarEl);
-        sidebarToggleEl?.remove(sidebarToggleEl);
+        sidebarEl?.remove();
+        sidebarToggleEl?.remove();
 
         return null;
       }
 
+      if (!this.compiler) {
+        throw new Error('Compiler is not initialized');
+      }
+
+      const sidebarGroupStates = new Map(
+        dom
+          .findAll(
+            sidebarNavEl,
+            'li.group > .group-toggle[role="button"][data-group-id]',
+          )
+          .map(elm => [
+            elm.getAttribute('data-group-id'),
+            elm.closest('li')?.classList.contains('collapse'),
+          ]),
+      );
+
       dom.setHTML('.sidebar-nav', this.compiler.sidebar(text, maxLevel));
+      this.#normalizeSidebarPageLinks(sidebarNavEl);
 
-      sidebarToggleEl.setAttribute('aria-expanded', !isMobile());
+      sidebarToggleEl.setAttribute('aria-expanded', String(!isMobile()));
 
-      const activeElmHref = this.router.toURL(this.route.path);
-      const activeEl = dom.find(`.sidebar-nav a[href="${activeElmHref}"]`);
+      const activeEl = /** @type {HTMLElement | null} */ (
+        findLinkByHref(sidebarNavEl, this.router.toURL(this.route.path), 'a')
+      );
 
       this.#addTextAsTitleAttribute('.sidebar-nav a');
 
       if (loadSidebar && activeEl) {
-        activeEl.parentNode.innerHTML +=
-          this.compiler.subSidebar(subMaxLevel) || '';
+        const activeItem = activeEl.closest('li');
+
+        activeItem?.insertAdjacentHTML(
+          'beforeend',
+          this.compiler.subSidebar(subMaxLevel) || '',
+        );
+
+        if (activeItem?.querySelector(':scope > .app-sub-sidebar')) {
+          activeEl.setAttribute('aria-expanded', 'true');
+        }
       } else {
         this.compiler.resetToc();
       }
@@ -309,18 +392,18 @@ export function Render(Base) {
       // Mark page links and groups
       const pageLinks = dom.findAll(
         sidebarNavEl,
-        'a:is(li > a, li > p > a):not(.section-link, [target="_blank"])',
+        'li > a:not(.section-link, [target="_blank"])',
       );
       const pageLinkGroups = dom
         // NOTE: Using filter() method as a replacement for :has() selector. It
-        // would be preferable to use only 'li:not(:has(> a, > p > a))' selector
+        // would be preferable to use only 'li:not(:has(> a))' selector
         // but the :has() selector is not supported by our Jest test environment
         // See: https://github.com/jsdom/jsdom/issues/3506#issuecomment-1769782333
         .findAll(sidebarEl, 'li')
         .filter(
           elm =>
             elm.querySelector(':scope > ul') &&
-            !elm.querySelectorAll(':scope > a, :scope > p > a').length,
+            !elm.querySelector(':scope > a'),
         );
 
       pageLinks.forEach(elm => {
@@ -329,12 +412,63 @@ export function Render(Base) {
 
       pageLinkGroups.forEach(elm => {
         elm.classList.add('group');
-        elm
-          .querySelector(':scope > p:not(:has(> *))')
-          ?.classList.add('group-title');
+
+        let groupTitle = [...elm.children].find(
+          child => child.tagName === 'P' && !child.querySelector('a'),
+        );
+        // Preserve the original styling behavior: only text-only paragraphs
+        // produced by Markdown receive the group-title class.
+        const styledGroupTitle =
+          groupTitle && !groupTitle.children.length ? groupTitle : null;
+
+        if (!groupTitle) {
+          const sublist = [...elm.children].find(
+            child => child.tagName === 'UL',
+          );
+          const titleNodes = [];
+
+          for (const child of elm.childNodes) {
+            if (child === sublist) {
+              break;
+            }
+
+            titleNodes.push(child);
+          }
+
+          if (sublist && titleNodes.some(node => node.textContent?.trim())) {
+            const newGroupTitle = document.createElement('p');
+            titleNodes.forEach(node => newGroupTitle.append(node));
+            groupTitle = newGroupTitle;
+            elm.insertBefore(newGroupTitle, sublist);
+          }
+        }
+
+        styledGroupTitle?.classList.add('group-title');
+
+        const rootList = elm.parentElement;
+
+        if (
+          collapsibleSidebarGroups &&
+          groupTitle &&
+          rootList?.parentElement === sidebarNavEl
+        ) {
+          const groupId = `${[...sidebarNavEl.children].indexOf(rootList)}:${[...rootList.children].indexOf(elm)}`;
+          const isCollapsed =
+            sidebarGroupStates.get(groupId) ?? collapseSidebarGroups;
+
+          elm.classList.toggle('collapse', isCollapsed);
+          groupTitle.classList.add('group-toggle');
+          groupTitle.setAttribute('data-group-id', groupId);
+          groupTitle.setAttribute('role', 'button');
+          groupTitle.setAttribute('tabindex', '0');
+          groupTitle.setAttribute('aria-expanded', String(!isCollapsed));
+        }
       });
     }
 
+    /**
+     * @param {HTMLElement | null} activeEl
+     */
     _bindEventOnRendered(activeEl) {
       const { autoHeader } = this.config;
 
@@ -342,11 +476,18 @@ export function Render(Base) {
 
       if (autoHeader && activeEl) {
         const main = dom.getNode('#main');
-        const firstNode = main.children[0];
-        if (firstNode && firstNode.tagName !== 'H1') {
-          const h1 = this.compiler.header(activeEl.innerText, 1);
-          const wrapper = dom.create('div', h1);
-          dom.before(main, wrapper.children[0]);
+        const hasH1 = main.querySelector('h1');
+
+        if (!hasH1) {
+          const h1HTML = /** @type {Compiler} */ (this.compiler).header(
+            activeEl.innerText,
+            1,
+          );
+          const h1Node = dom.create('div', h1HTML).firstElementChild;
+
+          if (h1Node) {
+            dom.before(main, h1Node);
+          }
         }
       }
     }
@@ -356,11 +497,60 @@ export function Render(Base) {
         return;
       }
 
-      const html = this.compiler.compile(text);
+      const html = /** @type {Compiler} */ (this.compiler).compile(text);
 
       ['.app-nav', '.app-nav-merged'].forEach(selector => {
         dom.setHTML(selector, html);
+        if (this.config.navbarPreservePath) {
+          this.#appendNavbarPath(selector);
+        }
         this.#addTextAsTitleAttribute(`${selector} a`);
+      });
+    }
+
+    #appendNavbarPath(selector) {
+      const nav = dom.find(selector);
+
+      if (!nav) {
+        return;
+      }
+
+      const links = dom.findAll(nav, 'a').reduce((links, link) => {
+        const anchor = /** @type {HTMLAnchorElement} */ (link);
+        const href = anchor.getAttribute('href');
+
+        if (
+          !href ||
+          isExternal(anchor.href) ||
+          (href.startsWith('#') && !href.startsWith('#/'))
+        ) {
+          return links;
+        }
+
+        const route = this.router.parse(href);
+        const path = cleanPath(`/${route.path}`);
+
+        if (route.query.id || (path !== '/' && !path.endsWith('/'))) {
+          return links;
+        }
+
+        links.push({ link: anchor, path, query: route.query });
+        return links;
+      }, /** @type {{link: HTMLAnchorElement, path: string, query: Record<string, string>}[]} */ ([]));
+
+      const currentPath = cleanPath(`/${this.route.path}`);
+      const currentRoot = links
+        .filter(({ path }) => currentPath.startsWith(path))
+        .sort((a, b) => b.path.length - a.path.length)[0];
+
+      if (!currentRoot) {
+        return;
+      }
+
+      const suffix = currentPath.slice(currentRoot.path.length);
+
+      links.forEach(({ link, path, query }) => {
+        link.setAttribute('href', this.router.toURL(`${path}${suffix}`, query));
       });
     }
 
@@ -396,11 +586,12 @@ export function Render(Base) {
         } else {
           prerenderEmbed(
             {
-              compiler: this.compiler,
+              compiler: /** @type {Compiler} */ (this.compiler),
               raw: result,
+              fetch: undefined,
             },
             tokens => {
-              html = this.compiler.compile(tokens);
+              html = /** @type {Compiler} */ (this.compiler).compile(tokens);
               callback();
             },
           );
@@ -413,20 +604,18 @@ export function Render(Base) {
       const rootElm = document.documentElement;
       const coverBg = getComputedStyle(rootElm).getPropertyValue('--cover-bg');
 
-      dom.toggleClass(
-        dom.getNode('main'),
-        coverOnly ? 'add' : 'remove',
-        'hidden',
-      );
+      dom.getNode('main').classList[coverOnly ? 'add' : 'remove']('hidden');
 
       if (!text) {
-        dom.toggleClass(el, 'remove', 'show');
+        el.classList.remove('show');
         return;
       }
 
-      dom.toggleClass(el, 'add', 'show');
+      el.classList.add('show');
 
-      let html = this.coverIsHTML ? text : this.compiler.cover(text);
+      let html = this.coverIsHTML
+        ? text
+        : /** @type {Compiler} */ (this.compiler).cover(text);
 
       if (!coverBg) {
         const mdBgMatch = html
@@ -581,13 +770,17 @@ export function Render(Base) {
       }
 
       if (config.themeColor) {
-        dom.$.head.appendChild(
-          dom.create('div', tpl.theme(config.themeColor)).firstElementChild,
-        );
+        const themeNode = dom.create(
+          'div',
+          tpl.theme(config.themeColor),
+        ).firstElementChild;
+        if (themeNode) {
+          dom.$.head.appendChild(themeNode);
+        }
       }
 
       this._updateRender();
-      dom.toggleClass(dom.body, 'ready');
+      dom.body.classList.add('ready');
     }
   };
 }

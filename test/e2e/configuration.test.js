@@ -41,7 +41,13 @@ test.describe('Configuration options', () => {
     test('false (throws uncaught errors)', async ({ page }) => {
       let consoleMsg, errorMsg;
 
-      page.on('console', msg => (consoleMsg = msg.text()));
+      page.on('console', msg => {
+        const text = msg.text();
+        if (text.startsWith('DEPRECATION:')) {
+          return;
+        } // ignore expected deprecation warnings
+        consoleMsg = text;
+      });
       page.on('pageerror', err => (errorMsg = err.message));
 
       await docsifyInit({
@@ -143,6 +149,70 @@ test.describe('Configuration options', () => {
 
       await page.evaluate(() => (window.location.hash = '#/fail'));
       await expect(page.locator('#main')).toContainText(expectText);
+    });
+  });
+
+  test.describe('sidebarPosition', () => {
+    test('right: renders the sidebar and toggle on the right', async ({
+      page,
+    }) => {
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await docsifyInit({
+        config: {
+          sidebarPosition: 'right',
+        },
+        markdown: {
+          homepage: '# Hello World',
+        },
+        styleURLs: ['/dist/themes/core.css'],
+      });
+
+      const sidebar = page.locator('.sidebar');
+      const toggle = page.locator('.sidebar-toggle');
+
+      await expect(sidebar).toHaveClass(/sidebar-right/);
+      await expect(toggle).toHaveClass(/sidebar-right/);
+      await expect(sidebar).toHaveClass(/show/);
+
+      const sidebarBox = await sidebar.boundingBox();
+      const toggleBox = await toggle.boundingBox();
+      const layoutWidth = await page.evaluate(
+        () => document.documentElement.clientWidth,
+      );
+
+      expect(sidebarBox?.x + sidebarBox?.width).toBe(layoutWidth);
+      expect(toggleBox?.x + toggleBox?.width).toBe(sidebarBox?.x);
+    });
+
+    test('right: opens from the right on mobile', async ({ page }) => {
+      await page.setViewportSize({ width: 600, height: 800 });
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await docsifyInit({
+        config: {
+          sidebarPosition: 'right',
+        },
+        markdown: {
+          homepage: '# Hello World',
+        },
+        styleURLs: ['/dist/themes/core.css'],
+      });
+
+      const sidebar = page.locator('.sidebar');
+      const toggle = page.locator('.sidebar-toggle');
+
+      await expect(sidebar).not.toHaveClass(/show/);
+      await page.locator('.sidebar-toggle-button').click();
+      await expect(sidebar).toHaveClass(/show/);
+
+      const sidebarBox = await sidebar.boundingBox();
+      const toggleBox = await toggle.boundingBox();
+      const layoutWidth = await page.evaluate(
+        () => document.documentElement.clientWidth,
+      );
+
+      expect(sidebarBox?.x + sidebarBox?.width).toBe(layoutWidth);
+      expect(toggleBox?.x).toBe(0);
+      expect(toggleBox?.width).toBe(layoutWidth - (sidebarBox?.width ?? 0));
     });
   });
 });

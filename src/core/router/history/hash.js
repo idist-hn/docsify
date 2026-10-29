@@ -1,6 +1,13 @@
 import { isExternal, noop } from '../../util/core.js';
 import { on } from '../../util/dom.js';
-import { parseQuery, cleanPath, replaceSlug } from '../util.js';
+import {
+  cleanPath,
+  getClickedLink,
+  getSidebarNavigationTarget,
+  isCurrentContextNavigation,
+  parseQuery,
+  replaceSlug,
+} from '../util.js';
 import { History } from './base.js';
 
 function replaceHash(path) {
@@ -34,26 +41,46 @@ export class HashHistory extends History {
     return index === -1 ? '' : href.slice(index + 1);
   }
 
-  /** @param {((params: {source: TODO}) => void)} [cb] */
+  /** @param {(params: {source: any, focusTarget?: import('../util.js').SidebarNavigationTarget}) => void} [cb] */
   onchange(cb = noop) {
     // The hashchange event does not tell us if it originated from
     // a clicked link or by moving back/forward in the history;
     // therefore we set a `navigating` flag when a link is clicked
     // to be able to tell these two scenarios apart
     let navigating = false;
+    let navigatingFocusTarget;
 
     on('click', e => {
-      const el = e.target.tagName === 'A' ? e.target : e.target.parentNode;
+      const el = getClickedLink(e);
 
-      if (el && el.tagName === 'A' && !isExternal(el.href)) {
+      if (el && isCurrentContextNavigation(e, el) && !isExternal(el.href)) {
         navigating = true;
+        navigatingFocusTarget = getSidebarNavigationTarget(el);
+
+        // Do not compare hash containing these classes.
+        if (el.matches('.app-name-link, .page-link')) {
+          if (el.hash === location.hash) {
+            navigating = false;
+            navigatingFocusTarget = undefined;
+          }
+          return;
+        }
+
+        if (el.hash === location.hash) {
+          cb({ focusTarget: navigatingFocusTarget, source: 'navigate' });
+          navigating = false;
+          navigatingFocusTarget = undefined;
+        }
       }
     });
 
-    on('hashchange', e => {
+    on('hashchange', () => {
       const source = navigating ? 'navigate' : 'history';
+      const focusTarget = navigating ? navigatingFocusTarget : undefined;
+
       navigating = false;
-      cb({ event: e, source });
+      navigatingFocusTarget = undefined;
+      cb({ focusTarget, source });
     });
   }
 
@@ -71,8 +98,8 @@ export class HashHistory extends History {
 
   /**
    * Parse the url
-   * @param {string} [path=location.href] URL to be parsed
-   * @return {object} { path, query }
+   * @param {string} path URL to be parsed
+   * @return {import('../index.js').Route} { path, query, file, response }
    */
   parse(path = location.href) {
     let query = '';

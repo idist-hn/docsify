@@ -2,7 +2,7 @@
 
 ![logo](_media/logo-idc.svg)
 
-# Viettel IDC Cloud <small>5.0.0-rc.1</small>
+# docsify <small>5.0.0</small> :id=docsify
 
 > Tài liệu hướng dẫn sử dụng dịch vụ Cloud của Viettel IDC
 

@@ -21,7 +21,12 @@
 
 Chào mừng bạn đến với **repository tài liệu chính thức** của dịch vụ Cloud Viettel IDC. Repository này chứa toàn bộ tài liệu hướng dẫn, API documentation, và best practices để sử dụng các dịch vụ Cloud một cách hiệu quả.
 
-## 🚀 Về dự án
+- No statically built HTML files
+- Simple and lightweight
+- Smart full-text search plugin
+- Multiple themes
+- Useful plugin API
+- Emoji support
 
 Repository này được xây dựng bằng **Docsify** - một static site generator mạnh mẽ, cung cấp:
 
@@ -32,7 +37,7 @@ Repository này được xây dựng bằng **Docsify** - một static site gene
 - ✅ **Cập nhật real-time**: Thay đổi hiển thị ngay lập tức
 - ✅ **SEO friendly**: Tối ưu cho công cụ tìm kiếm
 
-## 📖 Nội dung tài liệu
+[![Edit in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://sandbox.docsifyjs.org/)
 
 ### Dịch vụ Cloud chính
 

@@ -14,7 +14,7 @@ The Docsify "core" theme contains all of the styles and [theme properties](#them
 
 Theme add-ons are used in combination with the [core theme](#core-theme). Add-ons contain CSS rules that modify [theme properties](#theme-properties) values and/or add custom style declarations. They can often (but not always) be used with other add-ons.
 
-!> Theme add-ons must be loaded after the [core theme](#core-theme).
+> [!IMPORTANT] Theme add-ons must be loaded after the [core theme](#core-theme).
 
 <!-- prettier-ignore -->
 ```html
@@ -110,12 +110,20 @@ Display a loading animation while waiting for Docsify to initialize.
 
 Display expand/collapse icons on page links in the sidebar.
 
+Root group titles display chevrons only when
+[`collapsibleSidebarGroups`](configuration.md?id=collapsiblesidebargroups) is
+enabled.
+
 <label>
   <input class="toggle" type="checkbox" value="sidebar-chevron-right" data-class data-group="sidebar-chevron"> Preview <code>sidebar-chevron-right</code>
 </label>
 <br>
 <label>
   <input class="toggle" type="checkbox" value="sidebar-chevron-left" data-class data-group="sidebar-chevron"> Preview <code>sidebar-chevron-left</code>
+</label>
+<br>
+<label>
+  <input class="toggle" type="checkbox" value="sidebar-chevron-root-hidden" data-class> Hide root-level chevrons with <code>sidebar-chevron-root-hidden</code>
 </label>
 
 <!-- prettier-ignore -->
@@ -126,6 +134,14 @@ Display expand/collapse icons on page links in the sidebar.
 <!-- prettier-ignore -->
 ```html
 <body class="sidebar-chevron-left">
+```
+
+To hide chevrons on all root-level page links and group titles while retaining
+chevrons on nested page links, add the `sidebar-chevron-root-hidden` class:
+
+<!-- prettier-ignore -->
+```html
+<body class="sidebar-chevron-right sidebar-chevron-root-hidden">
 ```
 
 To prevent chevrons from displaying for specific page links, add a `no-chevron` class as follows:
@@ -288,7 +304,7 @@ Docsify provides [theme properties](#theme-properties) for simplified customizat
    }
    ```
 
-?> **Theme authors**: Consider providing instructions for loading your recommended web fonts manually instead of including them in your theme using `@import`. This allows users who prefer a different font to avoid loading your recommended web font(s) unnecessarily.
+   > [!TIP] **Theme authors**: Consider providing instructions for loading your recommended web fonts manually instead of including them in your theme using `@import`. This allows users who prefer a different font to avoid loading your recommended web font(s) unnecessarily.
 
 4. Advanced styling may require custom CSS declarations. This is expected, however custom CSS declarations may break when new versions of Docsify are released. When possible, leverage [theme properties](#theme-properties) instead of custom declarations or lock your [CDN](cdn) URLs to a [specific version](cdn#specific-version) to avoid potential issues when using custom CSS declarations.
 
@@ -302,27 +318,19 @@ Docsify provides [theme properties](#theme-properties) for simplified customizat
 
 The following properties are available in all official Docsify themes. Default values for the "Core" theme are shown.
 
-?> **Theme and plugin authors**: We encourage you to leverage these custom theme properties and to offer similar customization options in your projects.
+> [!TIP] **Theme and plugin authors**: We encourage you to leverage these custom theme properties and to offer similar customization options in your projects.
 
 ### Common
 
 Below are the most commonly modified theme properties. [Advanced](#advanced) theme properties are also available for use but typically do not need to be modified.
 
-<!-- TODO: Replace TBD with include CSS include below -->
-
-**TBD**
-
-<!-- [vars.css](https://raw.githubusercontent.com/docsifyjs/docsify/main/src/themes/shared/_vars.css ':include') -->
+[\_vars.css](https://raw.githubusercontent.com/docsifyjs/docsify/refs/heads/develop/src/themes/shared/_vars.css ':include')
 
 ### Advanced
 
 Advanced theme properties are also available for use but typically do not need to be modified. Values derived from [common](#common) theme properties but can be set explicitly if preferred.
 
-<!-- TODO: Replace TBD with include CSS include below -->
-
-**TBD**
-
-<!-- [vars.css](https://raw.githubusercontent.com/docsifyjs/docsify/main/src/themes/shared/_vars.css ':include') -->
+[\_vars-advanced.css](https://raw.githubusercontent.com/docsifyjs/docsify/refs/heads/develop/src/themes/shared/_vars-advanced.css ':include')
 
 ## Community
 

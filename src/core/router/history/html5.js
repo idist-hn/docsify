@@ -1,6 +1,12 @@
 import { isExternal, noop } from '../../util/core.js';
 import { on } from '../../util/dom.js';
-import { parseQuery, getPath } from '../util.js';
+import {
+  getClickedLink,
+  getPath,
+  getSidebarNavigationTarget,
+  isCurrentContextNavigation,
+  parseQuery,
+} from '../util.js';
 import { History } from './base.js';
 
 export class HTML5History extends History {
@@ -17,27 +23,31 @@ export class HTML5History extends History {
     return (path || '/') + window.location.search + window.location.hash;
   }
 
+  /** @param {(params: any) => void} [cb] */
   onchange(cb = noop) {
     on('click', e => {
-      const el = e.target.tagName === 'A' ? e.target : e.target.parentNode;
+      const el = getClickedLink(e);
 
-      if (el && el.tagName === 'A' && !isExternal(el.href)) {
+      if (el && isCurrentContextNavigation(e, el) && !isExternal(el.href)) {
         e.preventDefault();
         const url = el.href;
         window.history.pushState({ key: url }, '', url);
-        cb({ event: e, source: 'navigate' });
+        cb({
+          focusTarget: getSidebarNavigationTarget(el),
+          source: 'navigate',
+        });
       }
     });
 
-    on('popstate', e => {
-      cb({ event: e, source: 'history' });
+    on('popstate', () => {
+      cb({ source: 'history' });
     });
   }
 
   /**
    * Parse the url
    * @param {string} [path=location.href] URL to be parsed
-   * @return {object} { path, query }
+   * @return {import('../index.js').Route} { path, query, file, response }
    */
   parse(path = location.href) {
     let query = '';
@@ -62,4 +72,6 @@ export class HTML5History extends History {
       response: {},
     };
   }
+
+  normalize() {}
 }

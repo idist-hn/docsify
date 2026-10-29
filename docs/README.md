@@ -12,13 +12,16 @@
   <img alt="Language" src="https://img.shields.io/badge/language-Vietnamese-red.svg?style=flat-square">
 </p>
 
-Chào mừng bạn đến với tài liệu hướng dẫn sử dụng các dịch vụ Cloud của **Viettel IDC**. Tài liệu này cung cấp thông tin chi tiết về cách sử dụng, cấu hình và quản lý các dịch vụ Cloud một cách hiệu quả.
-
-## Về Viettel IDC Cloud
+Docsify turns your Markdown files into a documentation website instantly. Unlike most other documentation site generator tools, it doesn't need to build HTML files. Instead, it dynamically loads and parses your Markdown files and displays them as a website. To get started, create an `index.html` file and [deploy it on GitHub Pages](deploy.md) (for more details see the [Quick start](quickstart.md) guide).
 
 **Viettel IDC** là đơn vị hàng đầu tại Việt Nam trong lĩnh vực cung cấp dịch vụ Trung tâm dữ liệu (Data Center) và Điện toán đám mây (Cloud Computing). Với hệ thống Data Center hiện đại đạt chuẩn Tier 3 quốc tế, chúng tôi cung cấp các dịch vụ hạ tầng CNTT chất lượng cao.
 
-### Dịch vụ chính
+- No statically built HTML files
+- Simple and lightweight
+- Smart full-text search plugin
+- Multiple themes
+- Useful plugin API
+- Emoji support
 
 - **vServer**: Máy chủ ảo (VPS) linh hoạt và mạnh mẽ
 - **vStorage**: Lưu trữ đám mây an toàn, mở rộng không giới hạn
@@ -27,7 +30,7 @@ Chào mừng bạn đến với tài liệu hướng dẫn sử dụng các dị
 - **vMonitoring**: Giám sát hệ thống 24/7
 - **vSecurity**: Bảo mật toàn diện cho hạ tầng Cloud
 
-### Ưu điểm vượt trội
+Check out the [Showcase](awesome?id=showcase) to see docsify in use.
 
 - ✅ **SLA 99.99%** - Cam kết độ sẵn sàng cao
 - ✅ **Hỗ trợ 24/7** - Đội ngũ kỹ thuật chuyên nghiệp

@@ -10,8 +10,11 @@ export function cached(fn) {
   const cache = Object.create(null);
   return function (str) {
     const key = isPrimitive(str) ? str : JSON.stringify(str);
-    const hit = cache[key];
-    return hit || (cache[key] = fn(str));
+    if (key in cache) {
+      return cache[key];
+    }
+
+    return (cache[key] = fn(str));
   };
 }
 
@@ -48,10 +51,11 @@ export function isFn(obj) {
 
 /**
  * Check if url is external
- * @param {String} string  url
+ * @param {String} url  url
  * @returns {Boolean} True if the passed-in url is external
  */
 export function isExternal(url) {
+  /** @type {any} */
   const match = url.match(
     /^([^:/?#]+:)?(?:\/{2,}([^/?#]*))?([^?#]+)?(\?[^#]*)?(#.*)?/,
   );

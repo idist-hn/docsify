@@ -16,7 +16,21 @@
       rel="stylesheet"
       href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css"
     />
-    <link rel="icon" href="media/favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/docsify@5/dist/themes/addons/vue.min.css"
+      data-group="addon"
+      data-sheet="vue"
+      disabled
+    />
+
+    <!-- Prism Theme -->
+    <!-- <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-twilight.min.css"
+    /> -->
+
+    <!-- Site styles -->
     <style>
       :root {
         --theme-color: #e30613;
@@ -60,16 +74,32 @@
     <div id="app">Đang tải...</div>
     <script>
       window.$docsify = {
-        name: 'Viettel IDC Cloud',
-        logo: '_media/logo-idc.svg',
-        repo: '',
+        alias: {
+          '.*?/awesome':
+            'https://raw.githubusercontent.com/docsifyjs/awesome-docsify/master/README.md',
+          '.*?/changelog':
+            'https://raw.githubusercontent.com/docsifyjs/docsify/main/CHANGELOG.md',
+          '/.*/_navbar.md': '/_navbar.md',
+          '/zh-cn/(.*)':
+            'https://cdn.jsdelivr.net/gh/docsifyjs/docs-zh@main/$1',
+        },
+        auto2top: true,
+        collapsibleSidebarGroups: true,
+        coverpage: true,
+        executeScript: true,
+        // hideSidebar: true,
         loadSidebar: true,
         loadNavbar: true,
         coverpage: true,
         auto2top: true,
         maxLevel: 4,
         subMaxLevel: 2,
-        routerMode: 'history',
+        gtag: 'G-H77Y58DS3L',
+        name: 'docsify',
+        nameLink: {
+          '/zh-cn/': '#/zh-cn/',
+          '/': '#/',
+        },
         search: {
           maxAge: 86400000,
           paths: 'auto',
@@ -95,13 +125,10 @@
         executeScript: true,
       };
     </script>
-    <!-- Docsify v4 -->
-    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-    <!-- Plugins -->
-    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@5/dist/docsify.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@5/dist/plugins/search.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@5/dist/plugins/front-matter.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@5/dist/plugins/gtag.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>

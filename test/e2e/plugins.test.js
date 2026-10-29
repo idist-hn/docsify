@@ -3,6 +3,47 @@ import { waitForFunction } from '../helpers/wait-for.js';
 import { test, expect } from './fixtures/docsify-init-fixture.js';
 
 test.describe('Plugins', () => {
+  test('external scripts retain their HTML attributes when executed', async ({
+    page,
+  }) => {
+    const pageErrors = [];
+    page.on('pageerror', error => pageErrors.push(error.message));
+    await docsifyInit({
+      markdown: {
+        homepage: `
+          # External script
+
+          <script src="/widget.js" data-message="hello" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        `,
+      },
+      routes: {
+        '/widget.js': `
+          const script = document.currentScript;
+          window.widgetAttributes = {
+            message: script.dataset.message,
+            crossOrigin: script.crossOrigin,
+            referrerPolicy: script.referrerPolicy,
+          };
+        `,
+      },
+      scriptURLs: ['/dist/plugins/external-script.js'],
+    });
+
+    await expect
+      .poll(async () => ({
+        attributes: await page.evaluate(() => window.widgetAttributes),
+        errors: pageErrors,
+      }))
+      .toEqual({
+        attributes: {
+          message: 'hello',
+          crossOrigin: 'anonymous',
+          referrerPolicy: 'no-referrer',
+        },
+        errors: [],
+      });
+  });
+
   test('Hook order', async ({ page }) => {
     const consoleMsgs = [];
     const expectedMsgs = [
@@ -16,7 +57,13 @@ test.describe('Plugins', () => {
       'ready',
     ];
 
-    page.on('console', msg => consoleMsgs.push(msg.text()));
+    page.on('console', msg => {
+      const text = msg.text();
+      if (text.startsWith('DEPRECATION:')) {
+        return;
+      } // ignore expected deprecation warnings
+      consoleMsgs.push(text);
+    });
 
     await docsifyInit({
       config: {
@@ -71,6 +118,89 @@ test.describe('Plugins', () => {
     });
 
     expect(consoleMsgs).toEqual(expectedMsgs);
+  });
+
+  test('ready runs once when the initial sidebar is missing', async ({
+    page,
+  }) => {
+    await page.route('_sidebar.md', route => route.fulfill({ status: 404 }));
+
+    await docsifyInit({
+      config: {
+        loadSidebar: true,
+        name: 'Docsify',
+        nameLink: '#/',
+        plugins: [
+          function (hook) {
+            window.hookCalls = [];
+
+            hook.doneEach(() => {
+              window.hookCalls.push('doneEach');
+            });
+
+            hook.ready(() => {
+              window.hookCalls.push('ready');
+              document
+                .querySelector('.sidebar-nav')
+                .addEventListener('click', event => {
+                  const groupTitle = event.target.closest(
+                    '.sidebar-nav > ul > li > p',
+                  );
+
+                  groupTitle?.parentElement.classList.toggle('plugin-collapse');
+                });
+            });
+          },
+        ],
+      },
+      markdown: {
+        homepage: `
+          # Home
+
+          [Section](/section/)
+        `,
+      },
+      routes: {
+        '/section/README.md': '# Section',
+        '/section/_sidebar.md': `
+          - Group
+            - [Page](page)
+        `,
+      },
+    });
+
+    await expect
+      .poll(() => page.evaluate(() => window.hookCalls))
+      .toEqual(['doneEach', 'ready']);
+    await expect(page.locator('.sidebar-nav')).toBeEmpty();
+
+    await page.locator('a[href="#/section/"]').click();
+
+    const group = page.locator('.sidebar-nav > ul > li').first();
+    await expect(group.locator(':scope > p')).toHaveText('Group');
+
+    await group.locator(':scope > p').click();
+    await expect(group).toHaveClass(/plugin-collapse/);
+    await expect
+      .poll(() => page.evaluate(() => window.hookCalls))
+      .toEqual(['doneEach', 'ready', 'doneEach']);
+
+    await page.locator('.app-name-link').click();
+
+    await expect(page.locator('#main h1')).toHaveText('Home');
+    await expect(page.locator('.sidebar-nav')).toBeEmpty();
+    await expect
+      .poll(() => page.evaluate(() => window.hookCalls))
+      .toEqual(['doneEach', 'ready', 'doneEach', 'doneEach']);
+
+    await page.locator('a[href="#/section/"]').click();
+
+    await expect(group.locator(':scope > p')).toHaveText('Group');
+    await group.locator(':scope > p').click();
+    await expect(group).toHaveClass(/plugin-collapse/);
+    await expect
+      .poll(() => page.evaluate(() => window.hookCalls))
+      .toEqual(['doneEach', 'ready', 'doneEach', 'doneEach', 'doneEach']);
   });
 
   test.describe('beforeEach()', () => {
@@ -166,8 +296,15 @@ test.describe('Plugins', () => {
       page.on('console', async msg => {
         for (const arg of msg.args()) {
           const val = await arg.jsonValue();
-          const obj = JSON.parse(val);
-          obj.response && (routeData = obj);
+          if (typeof val === 'string' && val.startsWith('DEPRECATION:')) {
+            continue;
+          }
+          try {
+            const obj = typeof val === 'string' ? JSON.parse(val) : val;
+            obj && obj.response && (routeData = obj);
+          } catch {
+            // ignore non-JSON console messages
+          }
         }
       });
     });

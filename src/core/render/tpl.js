@@ -36,18 +36,20 @@ export function corner(data, cornerExternalLinkTarget) {
  * @returns {String} HTML of the main content
  */
 export function main(config) {
-  const { hideSidebar, name } = config;
+  const { hideSidebar, name, sidebarPosition } = config;
+  const sidebarPositionClass =
+    sidebarPosition === 'right' ? ' sidebar-right' : '';
   // const name = config.name ? config.name : '';
 
   const aside = /* html */ hideSidebar
     ? ''
     : `
-    <button class="sidebar-toggle" tabindex="-1" title="Press \\ to toggle">
-      <div class="sidebar-toggle-button" tabindex="0" aria-label="Toggle primary navigation" aria-keyshortcuts="\\" aria-controls="__sidebar">
+    <button class="sidebar-toggle${sidebarPositionClass}" tabindex="-1" title="Press \\ to toggle">
+      <div class="sidebar-toggle-button" tabindex="0" aria-label="Hide primary navigation" aria-keyshortcuts="Use shortcut key \\" aria-controls="__sidebar" role="button">
         <span></span><span></span><span></span>
       </div>
     </button>
-    <aside id="__sidebar" class="sidebar${!isMobile() ? ' show' : ''}" tabindex="-1" role="none">
+    <aside id="__sidebar" class="sidebar${sidebarPositionClass}${!isMobile() ? ' show' : ''}" tabindex="-1" role="none">
       ${
         config.name
           ? /* html */ `
@@ -112,6 +114,9 @@ export function tree(
   return tpl.replace('{inner}', innerHTML);
 }
 
+/**
+ * @deprecated
+ */
 export function helper(className, content) {
   return /* html */ `<p class="${className}">${content.slice(5).trim()}</p>`;
 }

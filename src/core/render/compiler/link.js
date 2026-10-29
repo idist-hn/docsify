@@ -1,51 +1,49 @@
-import { getAndRemoveConfig } from '../utils.js';
+import { escapeHtml, getAndRemoveConfig } from '../utils.js';
 import { isAbsolutePath } from '../../router/util.js';
 
 export const linkCompiler = ({
   renderer,
   router,
-  linkTarget,
-  linkRel,
+  linkTarget: defaultLinkTarget,
   compiler,
 }) =>
   (renderer.link = function ({ href, title = '', tokens }) {
     const attrs = [];
     const text = this.parser.parseInline(tokens) || '';
     const { str, config } = getAndRemoveConfig(title);
-    linkTarget = config.target || linkTarget;
-    linkRel =
+    const isAbsolute = isAbsolutePath(href);
+    const isNotCompilable = compiler._matchNotCompileLink(href);
+    const isMailto = href.startsWith('mailto:');
+
+    const linkTarget = config.target || defaultLinkTarget;
+    const linkRel =
       linkTarget === '_blank'
         ? compiler.config.externalLinkRel || 'noopener'
         : '';
     title = str;
 
-    if (
-      !isAbsolutePath(href) &&
-      !compiler._matchNotCompileLink(href) &&
-      !config.ignore
-    ) {
+    if (!isAbsolute && !isNotCompilable && !config.ignore) {
       if (href === compiler.config.homepage) {
         href = 'README';
       }
-
       href = router.toURL(href, null, router.getCurrentPath());
 
-      if (config.target) {
-        href.indexOf('mailto:') !== 0 && attrs.push(`target="${linkTarget}"`);
+      if (config.target && !isMailto) {
+        attrs.push(`target="${linkTarget}"`);
       }
     } else {
-      if (!isAbsolutePath(href) && href.slice(0, 2) === './') {
-        href =
-          document.URL.replace(/\/(?!.*\/).*/, '/').replace('#/./', '') + href;
+      if (!isAbsolute && href.startsWith('./')) {
+        href = router
+          .toURL(href, null, router.getCurrentPath())
+          .replace(/^#\//, '/');
       }
-      attrs.push(href.indexOf('mailto:') === 0 ? '' : `target="${linkTarget}"`);
-      attrs.push(
-        href.indexOf('mailto:') === 0
-          ? ''
-          : linkRel !== ''
-            ? ` rel="${linkRel}"`
-            : '',
-      );
+
+      if (!isMailto) {
+        attrs.push(`target="${linkTarget}"`);
+        if (linkRel !== '') {
+          attrs.push(`rel="${linkRel}"`);
+        }
+      }
     }
 
     if (config.disabled) {
@@ -54,7 +52,11 @@ export const linkCompiler = ({
     }
 
     if (config.class) {
-      attrs.push(`class="${config.class}"`);
+      let classes = config.class;
+      if (Array.isArray(config.class)) {
+        classes = config.class.join(' ');
+      }
+      attrs.push(`class="${classes}"`);
     }
 
     if (config.id) {
@@ -62,8 +64,8 @@ export const linkCompiler = ({
     }
 
     if (title) {
-      attrs.push(`title="${title}"`);
+      attrs.push(`title="${escapeHtml(title)}"`);
     }
 
-    return /* html */ `<a href="${href}" ${attrs.join(' ')}>${text}</a>`;
+    return /* html */ `<a href="${escapeHtml(href)}" ${attrs.join(' ')}>${text}</a>`;
   });

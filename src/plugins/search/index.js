@@ -4,6 +4,20 @@ import {
 } from './component.js';
 import { init as initSearch } from './search.js';
 
+/**
+ * @type {{
+ *   placeholder: string;
+ *   noData: string;
+ *   paths: string[] | 'auto';
+ *   depth: number;
+ *   maxAge: number;
+ *   namespace?: string;
+ *   pathNamespaces?: RegExp | string[];
+ *   keyBindings: string[];
+ *   insertAfter?: string;
+ *   insertBefore?: string;
+ *   resultSource?: 'none' | 'page' | 'breadcrumb';
+ * }} */
 const CONFIG = {
   placeholder: 'Type to search',
   noData: 'No Results!',
@@ -15,6 +29,7 @@ const CONFIG = {
   keyBindings: ['/', 'meta+k', 'ctrl+k'],
   insertAfter: undefined, // CSS selector
   insertBefore: undefined, // CSS selector
+  resultSource: 'none', // 'none' | 'page' | 'breadcrumb'
 };
 
 const install = function (hook, vm) {
@@ -32,6 +47,7 @@ const install = function (hook, vm) {
     CONFIG.namespace = opts.namespace || CONFIG.namespace;
     CONFIG.pathNamespaces = opts.pathNamespaces || CONFIG.pathNamespaces;
     CONFIG.keyBindings = opts.keyBindings || CONFIG.keyBindings;
+    CONFIG.resultSource = opts.resultSource || CONFIG.resultSource;
   }
 
   const isAuto = CONFIG.paths === 'auto';
@@ -45,9 +61,14 @@ const install = function (hook, vm) {
         bindings: CONFIG.keyBindings,
         callback(e) {
           const sidebarElm = document.querySelector('.sidebar');
-          const sidebarToggleElm = document.querySelector('.sidebar-toggle');
-          const searchElm = sidebarElm?.querySelector('input[type="search"]');
-          const isSidebarHidden = sidebarElm?.getBoundingClientRect().x < 0;
+          const sidebarToggleElm = /** @type {HTMLElement} */ (
+            document.querySelector('.sidebar-toggle')
+          );
+          const searchElm = /** @type {HTMLInputElement | null} */ (
+            sidebarElm?.querySelector('input[type="search"]')
+          );
+          const isSidebarHidden =
+            (sidebarElm?.getBoundingClientRect().x ?? 0) < 0;
 
           isSidebarHidden && sidebarToggleElm?.click();
 
@@ -67,4 +88,4 @@ const install = function (hook, vm) {
 };
 
 window.$docsify = window.$docsify || {};
-$docsify.plugins = [install, ...($docsify.plugins || [])];
+window.$docsify.plugins = [install, ...(window.$docsify.plugins || [])];

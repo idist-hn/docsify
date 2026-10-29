@@ -14,14 +14,14 @@ It is recommended that you save your files to the `./docs` subfolder of the `mai
 
 ![GitHub Pages](_images/deploy-github-pages.png)
 
-!> You can also save files in the root directory and select `main branch`.
-You'll need to place a `.nojekyll` file in the deploy location (such as `/docs` or the gh-pages branch)
+> [!IMPORTANT] You can also save files in the root directory and select `main branch`.
+> You'll need to place a `.nojekyll` file in the deploy location (such as `/docs` or the gh-pages branch)
 
 ## GitLab Pages
 
 If you are deploying your master branch, create a `.gitlab-ci.yml` with the following script:
 
-?> The `.public` workaround is so `cp` doesn't also copy `public/` to itself in an infinite loop.
+> [!TIP] The `.public` workaround is so `cp` doesn't also copy `public/` to itself in an infinite loop.
 
 ```YAML
 pages:
@@ -37,11 +37,11 @@ pages:
   - master
 ```
 
-!> You can replace script with `- cp -r docs/. public`, if `./docs` is your Docsify subfolder.
+> [!IMPORTANT] You can replace script with `- cp -r docs/. public`, if `./docs` is your Docsify subfolder.
 
 ## Firebase Hosting
 
-!> You'll need to install the Firebase CLI using `npm i -g firebase-tools` after signing into the [Firebase Console](https://console.firebase.google.com) using a Google Account.
+> [!IMPORTANT] You'll need to install the Firebase CLI using `npm i -g firebase-tools` after signing into the [Firebase Console](https://console.firebase.google.com) using a Google Account.
 
 Using a terminal, determine and navigate to the directory for your Firebase Project. This could be `~/Projects/Docs`, etc. From there, run `firebase init` and choose `Hosting` from the menu (use **space** to select, **arrow keys** to change options and **enter** to confirm). Follow the setup instructions.
 
@@ -58,18 +58,34 @@ Your `firebase.json` file should look similar to this (I changed the deployment 
 
 Once finished, build the starting template by running `docsify init ./site` (replacing site with the deployment directory you determined when running `firebase init` - public by default). Add/edit the documentation, then run `firebase deploy` from the root project directory.
 
-## VPS
+## Nginx
 
-Use the following nginx config.
+Use the following Nginx configuration.
 
 ```nginx
 server {
   listen 80;
-  server_name  your.domain.com;
+  server_name your.domain.com;
 
   location / {
     alias /path/to/dir/of/docs/;
     index index.html;
+  }
+}
+```
+
+If [`routerMode`](configuration.md#routermode) is set to `history`, use this configuration instead:
+
+```nginx
+server {
+  listen 80;
+  server_name your.domain.com;
+
+  root /path/to/dir/of/docs;
+  index index.html;
+
+  location / {
+    try_files $uri $uri/ /index.html;
   }
 }
 ```
@@ -213,3 +229,41 @@ You can deploy **Docsify** as a Static Site on [Kinsta](https://kinsta.com/stati
    - Publish directory: `docs`
 
 6. Click the **Create site**.
+
+## DeployHQ
+
+[DeployHQ](https://www.deployhq.com/) is a deployment automation platform that deploys your code to SSH/SFTP servers, FTP servers, cloud storage (Amazon S3, Cloudflare R2), and modern hosting platforms (Netlify, Heroku).
+
+> [!IMPORTANT] DeployHQ does not host your site. It automates deploying your Docsify files to your chosen hosting provider or server.
+
+To deploy your Docsify site using DeployHQ:
+
+1. Sign up for a [DeployHQ account](https://www.deployhq.com/) and verify your email.
+
+2. Create your first project by clicking on **Projects** and **New Project**. Connect your Git repository (GitHub, GitLab, Bitbucket, or any private repository). Authorize DeployHQ to access your repository.
+
+3. Add a server and enter your server details:
+
+   - Give your server a name
+   - Select your protocol (SSH/SFTP, FTP, or cloud platform)
+   - Enter your server hostname, username, and password/SSH key
+   - Set **Deployment Path** to your web root (e.g., `public_html/`)
+
+4. Since Docsify doesn't require a build step, you can deploy your files directly. If your Docsify files are in a `docs/` folder, configure the **Source Path** in your server settings to `docs/`.
+
+5. Click **Deploy Project**, then select your server and click **Deploy** to start your first deployment.
+
+Your Docsify site will be deployed to your server. You can enable automatic deployments to deploy on every Git push, or schedule deployments for specific times.
+
+For more information on advanced deployment features, see [DeployHQ's documentation](https://www.deployhq.com/support).
+
+## deed.page
+
+[deed.page](https://deed.page) hosts static sites published with one HTTP `PUT`. No account or build step is needed, so you can upload the `docs` folder as it is:
+
+```bash
+tar -C docs -czf site.tar.gz .
+curl -T site.tar.gz "https://deed.page/v1/sites?slug=my-docs"
+```
+
+The response includes the live `https://my-docs.deed.page/` URL and a token. To publish an update to the same slug, run the same command with `-H "Authorization: Bearer <token>"`. A single upload is capped at 4 MB; see the [deed.page docs](https://deed.page/docs) for larger sites.
